@@ -16,11 +16,11 @@ class Gryla {
     public static void main(String[] args) {
 
         //TODO: Ætli það sé betra að nota StringBuffer???
-        String inputText = args[0];
-        inputText = "Test bla";
+        //String inputText = args[0];
+        String inputText = "Test bla";
         String outTaggedAndParsedtext = "";
 
-        //Jájá
+        //Jáján fjlasdhjkasdhjkashdjkahsjd
 
 
         try {
