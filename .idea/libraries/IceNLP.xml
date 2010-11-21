@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="IceNLP">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/IceNLPCore/dist/IceNLPCore.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
