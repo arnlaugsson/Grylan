@@ -1,0 +1,33 @@
+[MWE_CP Þar aa sem c MWE_CP]
+[NP jökulinn nkeog NP]
+[VP ber sfg3en VP]
+[PP við ao [NP loft nheo NP] PP]
+[VP hættir sfg3en VP]
+{*SUBJ< [NP landið nheng NP] *SUBJ<}
+[VPb að cn vera sng VPb]
+{*COMP< [AP jarðneskt lhensf AP] *COMP<}
+, ,
+[CP en c CP]
+{*SUBJ> [NP jörðin nveng NP] *SUBJ>}
+[VP fær sfg3en VP]
+{*OBJ< [NP hlutdeild nveo NP] *OBJ<}
+[PP í aþ [NP himninum nkeþg NP] PP]
+, ,
+[AdvP þar aa AdvP]
+[VPi búa sng VPi]
+[AdvP ekki aa framar aam AdvP]
+{*OBJ< [NP neinar fovfo sorgir nvfo NP] *OBJ<}
+[CP og c CP]
+[MWE_AdvP þess fphee vegna ae MWE_AdvP]
+[VPb er sfg3en VPb]
+{*SUBJ< [NP gleðin nveng NP] *SUBJ<}
+{*COMP< [AP [AdvP ekki aa AdvP] nauðsynleg lvensf AP] *COMP<}
+, ,
+[AdvP þar aa AdvP]
+[VP ríkir sfg3en VP]
+{*SUBJ< [NP fegurðin nveng NP] *SUBJ<}
+{*COMP [AP ein lvensf AP] *COMP}
+, ,
+[PP ofar aþm [NP hverri foveþ kröfu nveþ NP] PP]
+. .
+
