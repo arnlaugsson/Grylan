@@ -17,6 +17,7 @@ class Gryla {
 
         //TODO: Ætli það sé betra að nota StringBuffer???
         String inputText = args[0];
+        inputText = "Test bla";
         String outTaggedAndParsedtext = "";
 
         //Jájá
