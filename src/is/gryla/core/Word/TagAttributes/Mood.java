@@ -1,11 +1,33 @@
 package is.gryla.core.Word.TagAttributes;
 
-/**
- * Created by IntelliJ IDEA.
- * User: skuli
- * Date: Nov 23, 2010
- * Time: 3:34:09 PM
- * To change this template use File | Settings | File Templates.
- */
 public enum Mood {
+    /* Verbs */
+    INFINITIVE,
+    IMPERATIVE,
+    INDICATIVE,
+    SUBJUNCTIVE,
+    SUPINE,
+    PERSENT,    // Present participle
+    PAST;       // Past particle
+
+    public static Mood resolve(char c) {
+        switch (c) {
+            case 'n':
+                return INFINITIVE;
+            case 'b':
+                return IMPERATIVE;
+            case 'f':
+                return INDICATIVE;
+            case 'v':
+                return SUBJUNCTIVE;
+            case 's':
+                return SUPINE;
+            case 'l':
+                return PERSENT;
+            case 'þ':
+                return PAST;
+            default:
+                throw new RuntimeException("No Mood available for '" + c + "'");
+        }
+    }
 }

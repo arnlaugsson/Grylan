@@ -39,7 +39,7 @@ public enum WordClass {
             case 'x':
                 return UNANALYZED;
             default:
-                throw new RuntimeException("No word-type available for '" + c + "'");
+                throw new RuntimeException("No word class available for '" + c + "'");
         }
     }
 }

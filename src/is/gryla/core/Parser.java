@@ -1,11 +1,12 @@
 package is.gryla.core;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-/**
- * Created by IntelliJ IDEA.
- * User: skuli
- * Date: Nov 22, 2010
- * Time: 9:09:52 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Parser {
+    private Scanner scanner; // To read input split on lines
+
+    public Parser(Scanner scanner){
+        this.scanner = scanner;
+    }
+
 }

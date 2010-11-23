@@ -1,6 +1,7 @@
 package is.gryla.core.Word.TagAttributes;
 
 public enum Case {
+    /* Nouns and adjectives */
     NOMINATIVE, //  n - nefnifall
     ACCUSATIVE, //  o - þolfall
     DATIVE,     //  þ - þágufall

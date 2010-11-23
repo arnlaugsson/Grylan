@@ -1,11 +1,36 @@
 package is.gryla.core.Phrase;
 
-/**
- * Created by IntelliJ IDEA.
- * User: skuli
- * Date: Nov 23, 2010
- * Time: 2:53:10 PM
- * To change this template use File | Settings | File Templates.
- */
-public enum PhraseType {
+public enum PhraseType{
+
+    // Start with '[' and end with ']'
+    AdvP,   // Adverb phrase
+    AP,     // Adjective phrase
+    NP,     // Noun phrase
+    PP,     // Prepositional phrase
+    VP,     // Verb phrase
+    CP,     // Coordination conjunction
+    SCP,    // Subordinating conjunction
+    InjP,   // Interjection
+    APs,    // Adjective phrases
+    NPs,    // Noun phrases
+    MWE,    // Multi-word expressions
+
+    // Start with '{*' and end with '*}'
+    QUAL,   // See IceParser paper
+    SUBJ,
+    OBJ,
+    OBJAP,
+    OBJNOM,
+    IOBJ,
+    COMP,
+    TIMEX;
+
+    public static PhraseType resolve(String s){
+        try {
+            return PhraseType.valueOf(s);
+        }
+        catch (Exception e) {
+            throw new RuntimeException("No phrase available for '" + s + "'");
+        }
+    }
 }

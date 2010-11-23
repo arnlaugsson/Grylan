@@ -1,11 +1,18 @@
 package is.gryla.core.Word.TagAttributes;
 
-/**
- * Created by IntelliJ IDEA.
- * User: skuli
- * Date: Nov 23, 2010
- * Time: 3:05:20 PM
- * To change this template use File | Settings | File Templates.
- */
 public enum Declension {
+    /* Adjectives */
+    STRONG,
+    WEAK;
+
+    public static Declension resolve(char c) {
+        switch (c) {
+            case 'v':
+                return STRONG;
+            case 's':
+                return WEAK;
+            default:
+                throw new RuntimeException("No declension available for '" + c + "'");
+        }
+    }
 }

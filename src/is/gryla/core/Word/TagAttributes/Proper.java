@@ -1,6 +1,7 @@
 package is.gryla.core.Word.TagAttributes;
 
 public enum Proper {
+    /* Nouns */
     PERSON,     // Persóna
     PLACE,      // Örnefni
     OTHER,      // Annað

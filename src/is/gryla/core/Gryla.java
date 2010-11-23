@@ -39,6 +39,7 @@ class Gryla {
 
         //Write the output to the screen.
         System.out.println(outTaggedAndParsedText);
+        return;
     }
 
 }
