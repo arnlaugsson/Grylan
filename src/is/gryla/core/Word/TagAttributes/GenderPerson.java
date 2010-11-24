@@ -1,15 +1,17 @@
 package is.gryla.core.Word.TagAttributes;
 
-public enum Gender {
-    /* Nouns, adjectives and pronouns */
+public enum GenderPerson {
+    /* This enum is for both gender and person */
+    /* Nouns, adjectives, pronouns and verbs*/
     MALE,       // KK
     FEMALE,     // KVK
     NEUTER,     // HVK
     FIRST,      // 1st for pronouns
     SECOND,     // 2nd for pronouns
+    THIRD,      // 3rd for verbs (except past participle)
     UNSPECIFIED;
 
-    public static Gender resolve(char c) {
+    public static GenderPerson resolve(char c) {
         switch (c) {
             case 'k':
                 return MALE;
@@ -21,6 +23,8 @@ public enum Gender {
                 return FIRST;
             case '2':
                 return SECOND;
+            case '3':
+                return THIRD;
             case 'x':
                 return UNSPECIFIED;
             default:

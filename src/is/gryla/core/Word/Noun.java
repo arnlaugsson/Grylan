@@ -6,16 +6,16 @@ import is.gryla.core.Word.TagAttributes.Number;
 public class Noun {
     private String word;
     private WordClass aClass;
-    private Gender gender;
+    private GenderPerson genderPerson;
     private Number number;
     private Case ncase;
-    private Article article;
+    private SuffixedArticle article;
     private Proper proper;
 
-    private Noun(String word, Gender gender, is.gryla.core.Word.TagAttributes.Number number, Case ncase, Article article, Proper proper) {
+    private Noun(String word, GenderPerson genderPerson, is.gryla.core.Word.TagAttributes.Number number, Case ncase, SuffixedArticle article, Proper proper) {
         this.word = word;
         this.aClass = WordClass.NOUN;
-        this.gender = gender;
+        this.genderPerson = genderPerson;
         this.number = number;
         this.ncase = ncase;
         this.article = article;
@@ -25,29 +25,29 @@ public class Noun {
     public static Noun resolve(String in) {
         String[] sep = in.split(" ", 2);
         String word = sep[0];
-        
-        Gender gender = Gender.resolve(sep[1].charAt(1));
+
+        GenderPerson genderPerson = GenderPerson.resolve(sep[1].charAt(1));
         Number number = Number.resolve(sep[1].charAt(2));
         Case ncase = Case.resolve(sep[1].charAt(3));
 
-        Article article = Article.resolve('_'); // Default no
+        SuffixedArticle article = SuffixedArticle.resolve('_'); // Default no
         Proper proper = Proper.resolve('_');    // Default no
 
         if (sep[1].length() == 5) {
             char next = sep[1].charAt(4);
             if (next == 'g') {
-                article = Article.resolve(next);    // 5-th letter says it has a suffixed article
+                article = SuffixedArticle.resolve(next);    // 5-th letter says it has a suffixed article
                 proper = Proper.resolve('_');       // But not a proper noun
             } else {
-                article = Article.resolve('-');     // 5-th letter says it's not a suffixed article
+                article = SuffixedArticle.resolve('-');     // 5-th letter says it's not a suffixed article
                 proper = Proper.resolve(next);      // Must be a Proper noun without article
             }
         } else if (sep[1].length() == 6) {
-            article = Article.resolve(sep[1].charAt(4));    // Suffixed article
+            article = SuffixedArticle.resolve(sep[1].charAt(4));    // Suffixed article
             proper = Proper.resolve(sep[1].charAt(5));      // And a proper noun
         }
 
-        return new Noun(word, gender, number, ncase, article, proper);
+        return new Noun(word, genderPerson, number, ncase, article, proper);
     }
 
     public String getWord() {
@@ -58,8 +58,8 @@ public class Noun {
         return aClass;
     }
 
-    public Gender getGender() {
-        return gender;
+    public GenderPerson getGender() {
+        return genderPerson;
     }
 
     public Number getNumber() {
@@ -70,7 +70,7 @@ public class Noun {
         return ncase;
     }
 
-    public Article getArticle() {
+    public SuffixedArticle getArticle() {
         return article;
     }
 

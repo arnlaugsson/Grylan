@@ -5,7 +5,8 @@ public enum Case {
     NOMINATIVE, //  n - nefnifall
     ACCUSATIVE, //  o - þolfall
     DATIVE,     //  þ - þágufall
-    GENATIVE;   //  e - eignafall
+    GENATIVE,   //  e - eignafall
+    NO_CASE;    // For verbs except in past participle
 
     public static Case resolve(char c) {
         switch (c) {
@@ -17,6 +18,8 @@ public enum Case {
                 return DATIVE;
             case 'e':
                 return GENATIVE;
+            case '_':
+                return NO_CASE;
             default:
                 throw new RuntimeException("No case available for '" + c + "'");
         }

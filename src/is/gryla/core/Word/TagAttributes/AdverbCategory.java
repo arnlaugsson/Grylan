@@ -1,6 +1,6 @@
 package is.gryla.core.Word.TagAttributes;
 
-public enum ACategory {
+public enum AdverbCategory {
     /* Adverb and preposition */
     DOES_NOT,       // Does not govern case
     EXCLAMATION,
@@ -8,7 +8,7 @@ public enum ACategory {
     DATIVE,         // Governs dative
     GENITIVE;       // Governs genitive
 
-    public static ACategory resolve(char c) {
+    public static AdverbCategory resolve(char c) {
         switch (c) {
             case 'a':
                 return DOES_NOT;

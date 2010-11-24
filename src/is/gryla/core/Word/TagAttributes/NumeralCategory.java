@@ -1,12 +1,12 @@
 package is.gryla.core.Word.TagAttributes;
 
-public enum NCategory {
+public enum NumeralCategory {
     /* Numeral */
     CARDINAL,
     NUMERIC,    // Numeric constant
     PERCENTAGE;
 
-    public static NCategory resolve(char c) {
+    public static NumeralCategory resolve(char c) {
         switch (c) {
             case 'f':
                 return CARDINAL;

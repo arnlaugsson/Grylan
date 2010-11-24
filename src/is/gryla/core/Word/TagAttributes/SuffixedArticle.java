@@ -1,11 +1,11 @@
 package is.gryla.core.Word.TagAttributes;
 
-public enum Article {
+public enum SuffixedArticle {
     /* Nouns */
     SUFFIXED,       // Viðbættur greinir
     NO_ARTICLE;     // Ekki viðbættur greinir
 
-    public static Article resolve(char c) {
+    public static SuffixedArticle resolve(char c) {
         switch (c) {
             case 'g':
                 return SUFFIXED;

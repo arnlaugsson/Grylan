@@ -1,11 +1,11 @@
 package is.gryla.core.Word.TagAttributes;
 
-public enum CCategory {
+public enum ConjunctionCategory {
     /* Conjunctions */
     INFINITIVE,     // Sign of infinitive
     RELATIVIZER;
 
-    public static CCategory resolve(char c) {
+    public static ConjunctionCategory resolve(char c) {
         switch (c) {
             case 'n':
                 return INFINITIVE;

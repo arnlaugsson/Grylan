@@ -7,29 +7,29 @@ public class Pronoun {
     private String word;
     private WordClass type;
     private Subcategory subcategory;
-    private Gender gender;
+    private GenderPerson genderPerson;
     private Number number;
     private Case ncase;
 
-    public Pronoun(String word, Subcategory subcategory, Gender gender, Number number, Case ncase) {
+    private Pronoun(String word, Subcategory subcategory, GenderPerson genderPerson, Number number, Case ncase) {
         this.word = word;
         this.type = WordClass.PRONOUN;
         this.subcategory = subcategory;
-        this.gender = gender;
+        this.genderPerson = genderPerson;
         this.number = number;
         this.ncase = ncase;
     }
 
-    public static Pronoun resolve(String in){
+    public static Pronoun resolve(String in) {
         String[] sep = in.split(" ", 2);
         String word = sep[0];
 
         Subcategory subcategory = Subcategory.resolve(sep[1].charAt(1));
-        Gender gender = Gender.resolve(sep[1].charAt(2));
+        GenderPerson genderPerson = GenderPerson.resolve(sep[1].charAt(2));
         Number number = Number.resolve(sep[1].charAt(3));
         Case ncase = Case.resolve(sep[1].charAt(4));
 
-        return new Pronoun(word, subcategory, gender, number, ncase);
+        return new Pronoun(word, subcategory, genderPerson, number, ncase);
     }
 
     public String getWord() {
@@ -44,8 +44,8 @@ public class Pronoun {
         return subcategory;
     }
 
-    public Gender getGender() {
-        return gender;
+    public GenderPerson getGender() {
+        return genderPerson;
     }
 
     public Number getNumber() {
