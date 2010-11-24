@@ -3,7 +3,7 @@ package is.gryla.core.Word;
 import is.gryla.core.Word.TagAttributes.*;
 import is.gryla.core.Word.TagAttributes.Number;
 
-public class Verb {
+public class Verb implements InterfaceWord {
     private String word;        // All verbs
     private WordClass type;     // All verbs
     private Mood mood;          // All verbs
@@ -24,24 +24,21 @@ public class Verb {
         this.ncase = ncase;
     }
 
-    public static Verb resolve(String in){
-        String[] sep = in.split(" ", 2);
-        String word = sep[0];
-
-        Mood mood = Mood.resolve(sep[1].charAt(1));
-        Voice voice = Voice.resolve(sep[1].charAt(2));
-        GenderPerson genderPerson = GenderPerson.resolve(sep[1].charAt(3));
-        Number number = Number.resolve(sep[1].charAt(4));
+    public static Verb resolve(String word, String tag){
+        Mood mood = Mood.resolve(tag.charAt(1));
+        Voice voice = Voice.resolve(tag.charAt(2));
+        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(3));
+        Number number = Number.resolve(tag.charAt(4));
 
         Tense tense = Tense.NO_TENSE;   // Default, then we set either tense or case
         Case ncase = Case.NO_CASE;      // depending on the genderPerson (past participle or other kind of verb)
 
         if (genderPerson == GenderPerson.FIRST || genderPerson == GenderPerson.SECOND || genderPerson == GenderPerson.THIRD){
             // Verb is not past participle
-            tense = Tense.resolve(sep[1].charAt(5));
+            tense = Tense.resolve(tag.charAt(5));
         }
         else{
-            ncase = Case.resolve(sep[1].charAt(5));
+            ncase = Case.resolve(tag.charAt(5));
         }
         
         return new Verb(word, mood, voice, genderPerson, number, tense, ncase);

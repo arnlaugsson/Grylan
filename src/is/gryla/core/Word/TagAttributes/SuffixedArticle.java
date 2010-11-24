@@ -9,7 +9,7 @@ public enum SuffixedArticle {
         switch (c) {
             case 'g':
                 return SUFFIXED;
-            case '_':
+            case '-':
                 return NO_ARTICLE;
             default:
                 throw new RuntimeException("No case available for '" + c + "'");

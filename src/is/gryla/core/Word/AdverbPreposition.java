@@ -4,7 +4,7 @@ import is.gryla.core.Word.TagAttributes.AdverbCategory;
 import is.gryla.core.Word.TagAttributes.Degree;
 import is.gryla.core.Word.TagAttributes.WordClass;
 
-public class AdverbPreposition {
+public class AdverbPreposition implements InterfaceWord {
     private String word;
     private WordClass type;
     private AdverbCategory category;
@@ -17,12 +17,9 @@ public class AdverbPreposition {
         this.degree = degree;
     }
 
-    public static AdverbPreposition resolve(String in){
-        String[] sep = in.split(" ", 2);
-        String word = sep[0];
-
-        AdverbCategory category = AdverbCategory.resolve(sep[1].charAt(1));
-        Degree degree = Degree.resolve(sep[1].charAt(2));
+    public static AdverbPreposition resolve(String word, String tag){
+        AdverbCategory category = AdverbCategory.resolve(tag.charAt(1));
+        Degree degree = Degree.resolve(tag.charAt(2));
 
         return new AdverbPreposition(word,category,degree);
     }

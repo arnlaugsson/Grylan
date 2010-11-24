@@ -2,7 +2,7 @@ package is.gryla.core.Word;
 
 import is.gryla.core.Word.TagAttributes.WordClass;
 
-public class Unanalyzed {
+public class Unanalyzed implements InterfaceWord {
     private String word;
     private WordClass type;
 
@@ -11,10 +11,7 @@ public class Unanalyzed {
         this.type = WordClass.UNANALYZED;
     }
 
-    public static Unanalyzed resolve(String in){
-        String[] sep = in.split(" ", 2);
-        String word = sep[0];
-
+    public static Unanalyzed resolve(String word){
         return new Unanalyzed(word);
     }
 

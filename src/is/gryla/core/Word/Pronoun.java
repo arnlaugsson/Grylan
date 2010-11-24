@@ -3,7 +3,7 @@ package is.gryla.core.Word;
 import is.gryla.core.Word.TagAttributes.*;
 import is.gryla.core.Word.TagAttributes.Number;
 
-public class Pronoun {
+public class Pronoun implements InterfaceWord {
     private String word;
     private WordClass type;
     private Subcategory subcategory;
@@ -20,14 +20,11 @@ public class Pronoun {
         this.ncase = ncase;
     }
 
-    public static Pronoun resolve(String in) {
-        String[] sep = in.split(" ", 2);
-        String word = sep[0];
-
-        Subcategory subcategory = Subcategory.resolve(sep[1].charAt(1));
-        GenderPerson genderPerson = GenderPerson.resolve(sep[1].charAt(2));
-        Number number = Number.resolve(sep[1].charAt(3));
-        Case ncase = Case.resolve(sep[1].charAt(4));
+    public static Pronoun resolve(String word, String tag) {
+        Subcategory subcategory = Subcategory.resolve(tag.charAt(1));
+        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(2));
+        Number number = Number.resolve(tag.charAt(3));
+        Case ncase = Case.resolve(tag.charAt(4));
 
         return new Pronoun(word, subcategory, genderPerson, number, ncase);
     }

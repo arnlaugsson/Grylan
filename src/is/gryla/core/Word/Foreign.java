@@ -2,7 +2,7 @@ package is.gryla.core.Word;
 
 import is.gryla.core.Word.TagAttributes.WordClass;
 
-public class Foreign {
+public class Foreign implements InterfaceWord {
     private String word;
     private WordClass type;
 
@@ -11,10 +11,7 @@ public class Foreign {
         this.type = WordClass.FOREIGN;
     }
 
-    public static Foreign resolve(String in){
-        String[] sep = in.split(" ", 2);
-        String word = sep[0];
-
+    public static Foreign resolve(String word){
         return new Foreign(word);
     }
 

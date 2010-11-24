@@ -12,8 +12,6 @@ public enum Tense {
                 return PRESENT;
             case 'þ':
                 return PAST;
-            case '_':
-                return NO_TENSE;
             default:
                 throw new RuntimeException("No Tense available for pronoun '" + c + "'");
         }

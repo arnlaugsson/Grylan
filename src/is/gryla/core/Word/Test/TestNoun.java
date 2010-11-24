@@ -8,9 +8,13 @@ public class TestNoun {
         String testString2 = "borð nhen";
         String testString3 = "Hamarinn nkeogö";
 
-        Noun thisNoun = Noun.resolve(testString1);
-        Noun thatNoun = Noun.resolve(testString2);
-        Noun whatNoun = Noun.resolve(testString3);
+        String[] first = testString1.split(" ",2);
+        String[] secon = testString2.split(" ",2);
+        String[] third = testString3.split(" ",2);
+
+        Noun thisNoun = Noun.resolve(first[0],first[1]);
+        Noun thatNoun = Noun.resolve(secon[0],secon[1]);
+        Noun whatNoun = Noun.resolve(third[0],third[1]);
 
         System.out.println(thisNoun.getWord() + "\t\t" +
                 thisNoun.getType() + "\t" +

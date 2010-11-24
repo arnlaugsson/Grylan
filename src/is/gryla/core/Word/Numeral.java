@@ -3,7 +3,7 @@ package is.gryla.core.Word;
 import is.gryla.core.Word.TagAttributes.*;
 import is.gryla.core.Word.TagAttributes.Number;
 
-public class Numeral {
+public class Numeral implements InterfaceWord {
     private String word;
     private WordClass type;
     private NumeralCategory category;
@@ -20,14 +20,11 @@ public class Numeral {
         this.ncase = ncase;
     }
 
-    public static Numeral resolve(String in){
-        String[] sep = in.split(" ", 2);
-        String word = sep[0];
-
-        NumeralCategory category = NumeralCategory.resolve(sep[1].charAt(1));
-        GenderPerson genderPerson = GenderPerson.resolve(sep[1].charAt(2));
-        Number number = Number.resolve(sep[1].charAt(3));
-        Case ncase = Case.resolve(sep[1].charAt(4));
+    public static Numeral resolve(String word, String tag){
+        NumeralCategory category = NumeralCategory.resolve(tag.charAt(1));
+        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(2));
+        Number number = Number.resolve(tag.charAt(3));
+        Case ncase = Case.resolve(tag.charAt(4));
 
         return new Numeral(word,category, genderPerson,number,ncase);
     }

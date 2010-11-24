@@ -2,10 +2,13 @@ package is.gryla.core.Phrase;
 
 public enum PhraseType{
 
+    ROOT,   // An entire sentence :D   
+
     // Start with '[' and end with ']'
     AdvP,   // Adverb phrase
     AP,     // Adjective phrase
     NP,     // Noun phrase
+    NPq,
     PP,     // Prepositional phrase
     VP,     // Verb phrase
     CP,     // Coordination conjunction

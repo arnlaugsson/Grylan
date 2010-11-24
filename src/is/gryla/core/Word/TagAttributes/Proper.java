@@ -15,8 +15,6 @@ public enum Proper {
                 return PLACE;
             case 's':
                 return OTHER;
-            case '_':
-                return NOT_PROPER;
             default:
                 throw new RuntimeException("No Proper-noun available for '" + c + "'");
         }

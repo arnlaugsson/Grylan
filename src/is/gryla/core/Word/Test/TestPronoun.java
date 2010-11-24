@@ -8,9 +8,13 @@ public class TestPronoun {
         String testString2 = "henni fpveþ";
         String testString3 = "þeirra fpkfe";
 
-        Pronoun thisPronoun = Pronoun.resolve(testString1);
-        Pronoun thatPronoun = Pronoun.resolve(testString2);
-        Pronoun whatPronoun = Pronoun.resolve(testString3);
+        String[] first = testString1.split(" ",2);
+        String[] secon = testString2.split(" ",2);
+        String[] third = testString3.split(" ",2);
+
+        Pronoun thisPronoun = Pronoun.resolve(first[0],first[1]);
+        Pronoun thatPronoun = Pronoun.resolve(secon[0],secon[1]);
+        Pronoun whatPronoun = Pronoun.resolve(third[0],third[1]);
 
         System.out.println(thisPronoun.getWord() + "\t\t" +
                 thisPronoun.getType() + "\t" +

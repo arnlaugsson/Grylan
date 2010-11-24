@@ -1,6 +1,10 @@
 package is.gryla.core.Word.Test;
 
 import is.gryla.core.Word.Adjective;
+import is.gryla.core.Word.TagAttributes.GenderPerson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestAdjective {
     public static void main(String[] args) {
@@ -8,9 +12,13 @@ public class TestAdjective {
         String testString2 = "ljótari lkenvm";
         String testString3 = "fallegasta lvenve";
 
-        Adjective thisAdjective = Adjective.resolve(testString1);
-        Adjective thatAdjective = Adjective.resolve(testString2);
-        Adjective whatAdjective = Adjective.resolve(testString3);
+        String[] first = testString1.split(" ",2);
+        String[] secon = testString2.split(" ",2);
+        String[] third = testString3.split(" ",2);
+
+        Adjective thisAdjective = Adjective.resolve(first[0],first[1]);
+        Adjective thatAdjective = Adjective.resolve(secon[0],secon[1]);
+        Adjective whatAdjective = Adjective.resolve(third[0],third[1]);
 
         System.out.println(thisAdjective.getWord() + "\t\t" +
                 thisAdjective.getType() + "\t" +
@@ -35,5 +43,15 @@ public class TestAdjective {
                 whatAdjective.getCase() + "\t" +
                 whatAdjective.getDeclension() + "\t" +
                 whatAdjective.getDegree());
+
+        Adjective[] thisList = {thisAdjective,thatAdjective, whatAdjective};
+
+        GenderPerson firstGen = thisAdjective.getGender();
+        for (int i=1; i < thisList.length; i++){
+            if (thisList[i].getGender() != firstGen){
+                throw new RuntimeException("Genders of adjective " + thisList[i].getWord() + " does not match " + thisList[0].getWord() + " gender.");
+            }
+        }
+        
     }
 }
