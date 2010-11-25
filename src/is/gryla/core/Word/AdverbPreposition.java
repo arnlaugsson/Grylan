@@ -19,7 +19,11 @@ public class AdverbPreposition implements InterfaceWord {
 
     public static AdverbPreposition resolve(String word, String tag){
         AdverbCategory category = AdverbCategory.resolve(tag.charAt(1));
-        Degree degree = Degree.resolve(tag.charAt(2));
+        Degree degree = Degree.NONE;
+
+        if (tag.length() > 2){
+            degree = Degree.resolve(tag.charAt(2));
+        }
 
         return new AdverbPreposition(word,category,degree);
     }

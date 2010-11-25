@@ -27,18 +27,26 @@ public class Verb implements InterfaceWord {
     public static Verb resolve(String word, String tag){
         Mood mood = Mood.resolve(tag.charAt(1));
         Voice voice = Voice.resolve(tag.charAt(2));
-        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(3));
-        Number number = Number.resolve(tag.charAt(4));
 
+        GenderPerson genderPerson = GenderPerson.NONE;
         Tense tense = Tense.NO_TENSE;   // Default, then we set either tense or case
         Case ncase = Case.NO_CASE;      // depending on the genderPerson (past participle or other kind of verb)
+        Number number = Number.NONE;
 
-        if (genderPerson == GenderPerson.FIRST || genderPerson == GenderPerson.SECOND || genderPerson == GenderPerson.THIRD){
-            // Verb is not past participle
-            tense = Tense.resolve(tag.charAt(5));
-        }
-        else{
-            ncase = Case.resolve(tag.charAt(5));
+        if (tag.length() > 3){
+            genderPerson = GenderPerson.resolve(tag.charAt(3));
+            number = Number.resolve(tag.charAt(4));
+
+            tense = Tense.NO_TENSE;   // Default, then we set either tense or case
+            ncase = Case.NO_CASE;      // depending on the genderPerson (past participle or other kind of verb)
+
+            if (genderPerson == GenderPerson.FIRST || genderPerson == GenderPerson.SECOND || genderPerson == GenderPerson.THIRD){
+                // Verb is not past participle
+                tense = Tense.resolve(tag.charAt(5));
+            }
+            else{
+                ncase = Case.resolve(tag.charAt(5));
+            }   
         }
         
         return new Verb(word, mood, voice, genderPerson, number, tense, ncase);

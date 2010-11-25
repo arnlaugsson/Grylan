@@ -11,6 +11,10 @@ public enum PhraseType{
     NPq,
     PP,     // Prepositional phrase
     VP,     // Verb phrase
+    VPb,
+    VPi,
+    VPs,
+    VPg,
     CP,     // Coordination conjunction
     SCP,    // Subordinating conjunction
     InjP,   // Interjection

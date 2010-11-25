@@ -15,9 +15,17 @@ public class Conjunction implements InterfaceWord {
     }
 
     public static Conjunction resolve(String word, String tag){
-        ConjunctionCategory category = ConjunctionCategory.resolve(tag.charAt(1));
-
-        return new Conjunction(word, category);
+        try{
+            ConjunctionCategory category = ConjunctionCategory.NONE;
+            if (tag.charAt(1) == 'n' || tag.charAt(1) == 't'){
+                category = ConjunctionCategory.resolve(tag.charAt(1));
+            }
+            
+            return new Conjunction(word, category);
+        }
+        catch (StringIndexOutOfBoundsException e){
+            return new Conjunction(word,ConjunctionCategory.NONE);
+        }
     }
 
     public String getWord() {

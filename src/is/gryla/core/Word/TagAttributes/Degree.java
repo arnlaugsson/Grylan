@@ -4,7 +4,8 @@ public enum Degree {
     /* Adjectives */
     POSITIVE,       // Frumstig
     COMPARATIVE,    // Miðstig
-    SUPERLATIVE;    // Efsta stig
+    SUPERLATIVE,    // Efsta stig
+    NONE;
 
     public static Degree resolve(char c) {
         switch (c) {

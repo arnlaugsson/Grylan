@@ -9,7 +9,8 @@ public enum GenderPerson {
     FIRST,      // 1st for pronouns
     SECOND,     // 2nd for pronouns
     THIRD,      // 3rd for verbs (except past participle)
-    UNSPECIFIED;
+    UNSPECIFIED,
+    NONE;
 
     public static GenderPerson resolve(char c) {
         switch (c) {

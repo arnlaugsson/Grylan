@@ -3,7 +3,8 @@ package is.gryla.core.Word.TagAttributes;
 public enum Number {
     /* Nouns and adjectives */
     SINGULAR,   // eintala, e
-    PLURAL;     // fleirtala, f
+    PLURAL,     // fleirtala, f
+    NONE;
 
     public static Number resolve(char c) {
         switch (c) {

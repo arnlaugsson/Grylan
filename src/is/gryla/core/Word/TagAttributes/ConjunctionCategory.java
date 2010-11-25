@@ -3,7 +3,8 @@ package is.gryla.core.Word.TagAttributes;
 public enum ConjunctionCategory {
     /* Conjunctions */
     INFINITIVE,     // Sign of infinitive
-    RELATIVIZER;
+    RELATIVIZER,
+    NONE;
 
     public static ConjunctionCategory resolve(char c) {
         switch (c) {
