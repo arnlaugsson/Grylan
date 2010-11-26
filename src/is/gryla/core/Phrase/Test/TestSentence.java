@@ -2,9 +2,11 @@ package is.gryla.core.Phrase.Test;
 
 import is.gryla.core.Phrase.Phrase;
 import is.gryla.core.Rules.RuleRunner;
+import is.gryla.core.Word.AbstractWord;
 import is.gryla.core.Word.InterfaceWord;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TestSentence {
     public static void main(String[] args) {
@@ -15,6 +17,26 @@ public class TestSentence {
         RuleRunner roadRunner = new RuleRunner();
 
         roadRunner.run(thisPhrase);
+
+        InterfaceWord[] array = new InterfaceWord[words.size()];
+
         int i = 0;
+        int[] sizeList = new int[words.size()];
+
+        for (InterfaceWord iword : words){
+            array[i] = iword;
+            System.out.println(iword.getWord());
+            int y = iword.getCount();
+            sizeList[i] = y;
+            i++;
+        }
+
+        Arrays.sort(sizeList);
+
+        for (int z : sizeList){
+            System.out.println(z + " " + array[z].getWord());
+        }
+
+        // Sigurður Árnason átti fallegan og góðan hest sem þótti ekkert betra en að leika sér í stöðuvatninu.
     }
 }

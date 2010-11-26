@@ -3,7 +3,7 @@ package is.gryla.core.Word;
 import is.gryla.core.Word.TagAttributes.*;
 import is.gryla.core.Word.TagAttributes.Number;
 
-public class Noun implements InterfaceWord{
+public class Noun  extends AbstractWord {
     private String word;
     private WordClass type;
     private GenderPerson genderPerson;
@@ -12,7 +12,7 @@ public class Noun implements InterfaceWord{
     private SuffixedArticle article;
     private Proper proper;
 
-    private Noun(String word, GenderPerson genderPerson, is.gryla.core.Word.TagAttributes.Number number, Case ncase, SuffixedArticle article, Proper proper) {
+    private Noun(String word, GenderPerson genderPerson, Number number, Case ncase, SuffixedArticle article, Proper proper, int count) {
         this.word = word;
         this.type = WordClass.NOUN;
         this.genderPerson = genderPerson;
@@ -20,9 +20,10 @@ public class Noun implements InterfaceWord{
         this.ncase = ncase;
         this.article = article;
         this.proper = proper;
+        this.countNumber = count;
     }
 
-    public static Noun resolve(String word,String tag) {
+    public static Noun resolve(String word,String tag,int count) {
         GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(1));
         Number number = Number.resolve(tag.charAt(2));
         Case ncase = Case.resolve(tag.charAt(3));
@@ -38,7 +39,7 @@ public class Noun implements InterfaceWord{
             proper = Proper.resolve(tag.charAt(5));
         }
 
-        return new Noun(word, genderPerson, number, ncase, article, proper);
+        return new Noun(word, genderPerson, number, ncase, article, proper, count);
     }
 
     public String getWord() {

@@ -3,7 +3,7 @@ package is.gryla.core.Word;
 import is.gryla.core.Word.TagAttributes.*;
 import is.gryla.core.Word.TagAttributes.Number;
 
-public class Verb implements InterfaceWord {
+public class Verb  extends AbstractWord {
     private String word;        // All verbs
     private WordClass type;     // All verbs
     private Mood mood;          // All verbs
@@ -13,7 +13,7 @@ public class Verb implements InterfaceWord {
     private Tense tense;        // Verbs except past participle
     private Case ncase;         // Past participle verbs
 
-    private Verb(String word, Mood mood, Voice voice, GenderPerson genderPerson, Number number, Tense tense, Case ncase) {
+    private Verb(String word, Mood mood, Voice voice, GenderPerson genderPerson, Number number, Tense tense, Case ncase, int count) {
         this.word = word;
         this.type = WordClass.VERB;
         this.mood = mood;
@@ -22,9 +22,10 @@ public class Verb implements InterfaceWord {
         this.number = number;
         this.tense = tense;
         this.ncase = ncase;
+        this.countNumber = count;
     }
 
-    public static Verb resolve(String word, String tag){
+    public static Verb resolve(String word, String tag,int count){
         Mood mood = Mood.resolve(tag.charAt(1));
         Voice voice = Voice.resolve(tag.charAt(2));
 
@@ -49,7 +50,7 @@ public class Verb implements InterfaceWord {
             }   
         }
         
-        return new Verb(word, mood, voice, genderPerson, number, tense, ncase);
+        return new Verb(word, mood, voice, genderPerson, number, tense, ncase, count);
     }
 
     public String getWord() {

@@ -6,27 +6,28 @@ import is.gryla.core.Word.TagAttributes.Number;
 import is.gryla.core.Word.TagAttributes.WordClass;
 
 
-public class Article implements InterfaceWord {
+public class Article extends AbstractWord {
     private String word;
     private WordClass type;
     private GenderPerson genderPerson;
     private Number number;
     private Case ncase;
 
-    private Article(String word, GenderPerson genderPerson, Number number, Case ncase) {
+    private Article(String word, GenderPerson genderPerson, Number number, Case ncase, int count) {
         this.word = word;
         this.type = WordClass.ARTICLE;
         this.genderPerson = genderPerson;
         this.number = number;
-        this.ncase = ncase;
+        this.ncase = ncase ;
+        this.countNumber = count;
     }
 
-    public static Article resolve(String word, String tag) {
+    public static Article resolve(String word, String tag, int count) {
         GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(1));
         Number number = Number.resolve(tag.charAt(2));
         Case ncase = Case.resolve(tag.charAt(3));
 
-        return new Article(word, genderPerson, number, ncase);
+        return new Article(word, genderPerson, number, ncase, count);
     }
 
     public String getWord() {

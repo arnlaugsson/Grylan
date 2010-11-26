@@ -2,17 +2,18 @@ package is.gryla.core.Word;
 
 import is.gryla.core.Word.TagAttributes.WordClass;
 
-public class Foreign implements InterfaceWord {
+public class Foreign  extends AbstractWord {
     private String word;
     private WordClass type;
 
-    private Foreign(String word){
+    private Foreign(String word, int count){
         this.word = word;
         this.type = WordClass.FOREIGN;
+        this.countNumber = count;
     }
 
-    public static Foreign resolve(String word){
-        return new Foreign(word);
+    public static Foreign resolve(String word, int count){
+        return new Foreign(word,count);
     }
 
     public String getWord() {

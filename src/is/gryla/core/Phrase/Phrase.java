@@ -10,6 +10,7 @@ public class Phrase {
     private ArrayList<InterfaceWord> words;
     private PhraseType type;
     private boolean questionMark;
+    private static int count = 0;
 
     private Phrase(ArrayList<Phrase> phrases, ArrayList<InterfaceWord> words, PhraseType type, boolean questionMark) {
         this.phrases = phrases;
@@ -62,34 +63,44 @@ public class Phrase {
                 
                 switch (tag.charAt(0)) {
                     case 'n':
-                        words.add(Noun.resolve(word, tag)); // Here is the first error in TestSentence
+                        words.add(Noun.resolve(word, tag, count)); // Here is the first error in TestSentence
+                        count++;
                         break;
                     case 'l':
-                        words.add(Adjective.resolve(word, tag));
+                        words.add(Adjective.resolve(word, tag, count));
+                        count++;
                         break;
                     case 'f':
-                        words.add(Pronoun.resolve(word, tag));
+                        words.add(Pronoun.resolve(word, tag, count));
+                        count++;
                         break;
                     case 'g':
-                        words.add(Article.resolve(word, tag));
+                        words.add(Article.resolve(word, tag, count));
+                        count++;
                         break;
                     case 't':
-                        words.add(Numeral.resolve(word, tag));
+                        words.add(Numeral.resolve(word, tag, count));
+                        count++;
                         break;
                     case 's':
-                        words.add(Verb.resolve(word, tag));
+                        words.add(Verb.resolve(word, tag, count));
+                        count++;
                         break;
                     case 'a':
-                        words.add(AdverbPreposition.resolve(word, tag));
+                        words.add(AdverbPreposition.resolve(word, tag, count));
+                        count++;
                         break;
                     case 'c':
-                        words.add(Conjunction.resolve(word, tag));
+                        words.add(Conjunction.resolve(word, tag, count));
+                        count++;
                         break;
                     case 'e':
-                        words.add(Foreign.resolve(word));
+                        words.add(Foreign.resolve(word, count));
+                        count++;
                         break;
                     case 'x':
-                        words.add(Unanalyzed.resolve(word));
+                        words.add(Unanalyzed.resolve(word, count));
+                        count++;
                         break;
                     default:
                         break;
@@ -469,8 +480,8 @@ public class Phrase {
                     }
                     break;
                 default:
-                    // Todo: laga fyrir enda setninga!!!
-                    //in = tokens[1].split(" ", 3)[2]; // Throw out of string
+                    // Eitthvað tákn (punktur, komma, eða þannig) - hækka word counter!
+                    count++;
                     break;
             }
             if (phrase != null) {

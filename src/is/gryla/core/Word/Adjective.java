@@ -3,7 +3,7 @@ package is.gryla.core.Word;
 import is.gryla.core.Word.TagAttributes.*;
 import is.gryla.core.Word.TagAttributes.Number;
 
-public class Adjective implements InterfaceWord {
+public class Adjective extends AbstractWord {
     private String word;
     private WordClass type;
     private GenderPerson genderPerson;
@@ -12,7 +12,7 @@ public class Adjective implements InterfaceWord {
     private Declension declension;
     private Degree degree;
 
-    private Adjective(String word, GenderPerson genderPerson, Number number, Case ncase, Declension declension, Degree degree) {
+    private Adjective(String word, GenderPerson genderPerson, Number number, Case ncase, Declension declension, Degree degree, int count) {
         this.word = word;
         this.type = WordClass.ADJECTIVE;
         this.genderPerson = genderPerson;
@@ -20,9 +20,10 @@ public class Adjective implements InterfaceWord {
         this.ncase = ncase;
         this.declension = declension;
         this.degree = degree;
+        this.countNumber = count;
     }
 
-    public static Adjective resolve(String word, String tag) {
+    public static Adjective resolve(String word, String tag, int count) {
         GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(1));
         Number number = Number.resolve(tag.charAt(2));
         Case ncase = Case.resolve(tag.charAt(3));
@@ -34,7 +35,7 @@ public class Adjective implements InterfaceWord {
             degree = Degree.resolve(tag.charAt(5));
         }
 
-        return new Adjective(word, genderPerson, number, ncase, declension, degree);
+        return new Adjective(word, genderPerson, number, ncase, declension, degree, count);
     }
 
     public String getWord() {
