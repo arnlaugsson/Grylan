@@ -1,6 +1,7 @@
 package is.gryla.core.Phrase;
 
 import is.gryla.core.Word.*;
+import is.gryla.core.Word.TagAttributes.WordClass;
 
 import java.util.ArrayList;
 
@@ -478,4 +479,46 @@ public class Phrase {
         }
         return new Phrase(phrases, null, PhraseType.ROOT, false);
     }
+
+    /**
+     *  Returns a list of all words belonging to the phrase and it's possible subphrases (recursive).
+     *  Note: words are not necessarily in the correct order..
+     *
+     * @return ArrayList of all words found beneath phrase
+     */
+    public ArrayList<InterfaceWord> getAllWords(){
+        ArrayList<InterfaceWord> words = new ArrayList<InterfaceWord>();
+
+        if (this.words != null){
+            words.addAll(this.words);
+        }
+
+        if (this.phrases != null){
+            for (Phrase phrase : this.phrases){
+                words.addAll(phrase.getAllWords());
+            }
+        }
+        return words;
+    }
+
+    public void runRules(){
+        
+    }
+
+    public PhraseType getType() {
+        return type;
+    }
+
+    public boolean isQuestionMark() {
+        return questionMark;
+    }
+
+    public ArrayList<Phrase> getPhrases() {
+        return phrases;
+    }
+
+    public ArrayList<InterfaceWord> getWords() {
+        return words;
+    }
 }
+
