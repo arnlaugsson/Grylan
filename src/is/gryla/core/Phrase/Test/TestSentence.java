@@ -25,16 +25,24 @@ public class TestSentence {
 
         for (InterfaceWord iword : words){
             array[i] = iword;
-            System.out.println(iword.getWord());
+            //System.out.println(iword.getWord());
             int y = iword.getCount();
             sizeList[i] = y;
             i++;
         }
 
         Arrays.sort(sizeList);
-
+        InterfaceWord[] array2 = new InterfaceWord[sizeList.length];
         for (int z : sizeList){
-            System.out.println(z + " " + array[z].getWord());
+            for (InterfaceWord iword : words){
+                if (iword.getCount() == z){
+                    array2[z] = iword;
+                }
+            }
+        }
+
+        for (InterfaceWord iword : array2){
+            System.out.println(iword.getCount() + " - " + iword.getWord());
         }
 
         // Sigurður Árnason átti fallegan og góðan hest sem þótti ekkert betra en að leika sér í stöðuvatninu.
