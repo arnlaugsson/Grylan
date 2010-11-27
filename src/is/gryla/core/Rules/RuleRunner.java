@@ -4,8 +4,9 @@ import is.gryla.core.Errors.Error;
 import is.gryla.core.Phrase.Phrase;
 import is.gryla.core.Phrase.PhraseType;
 import is.gryla.core.Word.InterfaceWord;
-import is.gryla.core.Word.TagAttributes.Case;
-import is.gryla.core.Word.TagAttributes.WordClass;
+import is.gryla.core.Word.TagAttributes.*;
+import is.gryla.core.Word.TagAttributes.Number;
+
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public class RuleRunner {
         this.root = sentence;
 
         NPCaseDisagreement(this.root);
+        NPNumberDisagreement(this.root);
+        NPGenderDisagreement(this.root);
 
     }
 
@@ -49,6 +52,64 @@ public class RuleRunner {
                 for (Phrase subphrase : phrase.getPhrases()){
                     // Recursively call this rule to all possible sub-phrases
                     NPCaseDisagreement(subphrase);
+                }
+            }
+        }
+    }
+
+    private void NPNumberDisagreement(Phrase phrase){
+        if (phrase.getType() == PhraseType.NP){
+            ArrayList<InterfaceWord> words = phrase.getAllWords();
+
+            Number base = null;
+
+            for (InterfaceWord word : words){
+                if (word.getNumber() != null && word.getType() != WordClass.VERB){
+                    if (base == null){
+                        base = word.getNumber();
+                    }
+                    if (base != word.getNumber()){
+                        // An error was found
+                        Error thisError = new Error(word.getCount(),word.getWord(),2,null);
+                        errors.add(thisError);
+                    }
+                }
+            }
+
+        } else {
+            if (phrase.getPhrases() != null){
+                for (Phrase subphrase : phrase.getPhrases()){
+                    // Recursively call this rule to all possible sub-phrases
+                    NPNumberDisagreement(subphrase);
+                }
+            }
+        }
+    }
+
+    private void NPGenderDisagreement(Phrase phrase){
+        if (phrase.getType() == PhraseType.NP){
+            ArrayList<InterfaceWord> words = phrase.getAllWords();
+
+            GenderPerson base = null;
+
+            for (InterfaceWord word : words){
+                if (word.getGenderPerson() != null && word.getType() != WordClass.VERB){
+                    if (base == null){
+                        base = word.getGenderPerson();
+                    }
+                    if (base != word.getGenderPerson()){
+                        // An error was found
+                        Error thisError = new Error(word.getCount(),word.getWord(),2,null);
+                        errors.add(thisError);
+                    }
+                }
+            }
+
+        } else {
+            if (phrase.getPhrases() != null){
+                for (Phrase subphrase : phrase.getPhrases()){
+                    // Recursively call this rule to all possible sub-phrases
+                    NPNumberDisagreement(subphrase);
                 }
             }
         }
