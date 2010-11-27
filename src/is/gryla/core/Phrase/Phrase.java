@@ -291,6 +291,7 @@ public class Phrase {
         /* Called for the first time */
 
         ArrayList<Phrase> phrases = new ArrayList<Phrase>();
+        ArrayList<InterfaceWord> words = new ArrayList<InterfaceWord>();
         PhraseType token = PhraseType.ROOT;
 
         while (in.length() > 0) {
@@ -313,9 +314,15 @@ public class Phrase {
             } else {
                 // punktur, punktur, komma strik
                 String[] rest = {"", ""};
-                if (tokens[1].contains(" ")) {
-                    rest = tokens[1].split(" ", 2);
+                words.add(Miscellaneous.resolve(tokens[0], count));
+                count++;
+
+                if (tokens.length > 1){
+                    if (tokens[1].contains(" ")) {
+                        rest = tokens[1].split(" ", 2);
+                    }
                 }
+
                 in = rest[1];
                 continue;
             }
@@ -488,7 +495,7 @@ public class Phrase {
                 phrases.add(phrase);
             }
         }
-        return new Phrase(phrases, null, PhraseType.ROOT, false);
+        return new Phrase(phrases, words, PhraseType.ROOT, false);
     }
 
     /**

@@ -7,10 +7,16 @@
 
 package is.gryla.core;
 
+import is.gryla.core.Errors.*;
+import is.gryla.core.Phrase.Phrase;
+import is.gryla.core.Rules.RuleRunner;
+import is.gryla.core.Word.InterfaceWord;
 import is.iclt.icenlp.core.tokenizer.Sentences;
 import is.iclt.icenlp.core.icetagger.IceTagger;
 import is.iclt.icenlp.facade.IceTaggerFacade;
 import is.iclt.icenlp.facade.IceParserFacade;
+
+import java.util.ArrayList;
 
 class Gryla {
     public static void main(String[] args) {
@@ -24,21 +30,56 @@ class Gryla {
         //inputText = "Test lína til að parsa og tagga ef það sé ekkert inntak.";
         String outTaggedAndParsedText = "";
 
+
         try {
             IceTaggerFacade tagger = new IceTaggerFacade(IceTagger.HmmModelType.startend);
             IceParserFacade parser = new IceParserFacade();
 
             //Here we tag the text and get it back in a Sentence form.
             Sentences sentences = tagger.tag(inputText);
+
             //Next we send the Sentences as strings to the parser and get back a string.
-            outTaggedAndParsedText = parser.parse(sentences.toString(), true, true);
+            outTaggedAndParsedText = parser.parse(sentences.toString(), true, false);
+            
         } catch (Exception e) {
             System.out.println("Tag and parsing error.");
             //System.err.println("Error: " + e);
         }
 
-        //Write the output to the screen.
-        System.out.println(outTaggedAndParsedText);
+        Phrase thisPhrase = Phrase.start(outTaggedAndParsedText);
+
+        RuleRunner roadRunner = new RuleRunner();
+
+        roadRunner.run(thisPhrase);
+
+        ArrayList<InterfaceWord> tempWords = thisPhrase.getAllWords();
+        
+        if (roadRunner.errors != null && roadRunner.errors.size() > 0){
+            for (is.gryla.core.Errors.Error error : roadRunner.errors){
+                System.out.println(error.toString());
+            }
+        } else{
+            System.out.println("ok");
+        }
+
+        // Write the output to the screen.
+        // System.out.println(outTaggedAndParsedText);
+
+        // 0 Halló
+        // 1 Kristján
+        // 2 ,
+        // 3 ég
+        // 4 heiti
+        // 5 Sigurður
+        // 6 Karls
+        // 7 Magnússon
+        // 8 .
+        // 9 Gaman
+        // 10 er
+        // 11 að
+        // 12 kynnast
+        // 13 þig
+        // 14 .
         return;
     }
 
