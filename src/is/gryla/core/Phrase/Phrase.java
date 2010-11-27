@@ -39,7 +39,7 @@ public class Phrase {
                 if (tokens[0] == "[NP?") {
                     // A new feature of IceNLP marks dubious NP with a question mark
                     token = PhraseType.NPq;
-                } else {
+                }else {
                     token = PhraseType.valueOf(tokens[0].substring(1, tokens[0].length()));
                 }
             } else if (tokens[0].charAt(0) == '{' && tokens[0].length() > 1) {
@@ -145,7 +145,7 @@ public class Phrase {
                     in = tokens[1].substring(position + 4, tokens[1].length());
                     break;
                 case PP:
-                    position = tokens[1].indexOf("PP]");
+                    position = tokens[1].indexOf(" PP]");
                     phrase = resolve(tokens[1].substring(0, position), token);
                     in = tokens[1].substring(position + 3, tokens[1].length());
                     break;
@@ -203,6 +203,11 @@ public class Phrase {
                     position = tokens[1].indexOf("MWE]");
                     phrase = resolve(tokens[1].substring(0, position), token);
                     in = tokens[1].substring(position + 4, tokens[1].length());
+                    break;
+                case MWE_PP:
+                    position = tokens[1].indexOf("MWE_PP]");
+                    phrase = resolve(tokens[1].substring(0, position), token);
+                    in = tokens[1].substring(position + 7, tokens[1].length());
                     break;
                 case QUAL:
                     position = tokens[1].indexOf("*QUAL");
@@ -355,7 +360,7 @@ public class Phrase {
                     in = tokens[1].substring(position + 4, tokens[1].length());
                     break;
                 case PP:
-                    position = tokens[1].indexOf("PP]");
+                    position = tokens[1].indexOf(" PP]");
                     phrase = resolve(tokens[1].substring(0, position), token);
                     in = tokens[1].substring(position + 3, tokens[1].length());
                     break;
@@ -413,6 +418,11 @@ public class Phrase {
                     position = tokens[1].indexOf("MWE]");
                     phrase = resolve(tokens[1].substring(0, position), token);
                     in = tokens[1].substring(position + 4, tokens[1].length());
+                    break;
+                case MWE_PP:
+                    position = tokens[1].indexOf("MWE_PP]");
+                    phrase = resolve(tokens[1].substring(0, position), token);
+                    in = tokens[1].substring(position + 7, tokens[1].length());
                     break;
                 case QUAL:
                     position = tokens[1].indexOf("*QUAL");
@@ -518,6 +528,7 @@ public class Phrase {
         }
         return words;
     }
+    
 
     public void runRules(){
         

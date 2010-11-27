@@ -25,10 +25,12 @@ public class RuleRunner {
         NPCaseDisagreement(this.root);
         NPNumberDisagreement(this.root);
         NPGenderDisagreement(this.root);
+        PPCaseDisagreement(this.root);
 
     }
 
     private void NPCaseDisagreement(Phrase phrase){
+        int ruleNumber = 1;
         if (phrase.getType() == PhraseType.NP){
             ArrayList<InterfaceWord> words = phrase.getAllWords();
 
@@ -41,7 +43,7 @@ public class RuleRunner {
                     }
                     if (base != word.getCase()){
                         // An error was found
-                        Error thisError = new Error(word.getCount(),word.getWord(),1,null);
+                        Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
                         errors.add(thisError);
                     }
                 }
@@ -58,6 +60,7 @@ public class RuleRunner {
     }
 
     private void NPNumberDisagreement(Phrase phrase){
+        int ruleNumber = 2;
         if (phrase.getType() == PhraseType.NP){
             ArrayList<InterfaceWord> words = phrase.getAllWords();
 
@@ -70,7 +73,7 @@ public class RuleRunner {
                     }
                     if (base != word.getNumber()){
                         // An error was found
-                        Error thisError = new Error(word.getCount(),word.getWord(),2,null);
+                        Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
                         errors.add(thisError);
                     }
                 }
@@ -87,6 +90,7 @@ public class RuleRunner {
     }
 
     private void NPGenderDisagreement(Phrase phrase){
+        int ruleNumber = 3;
         if (phrase.getType() == PhraseType.NP){
             ArrayList<InterfaceWord> words = phrase.getAllWords();
 
@@ -99,7 +103,7 @@ public class RuleRunner {
                     }
                     if (base != word.getGenderPerson()){
                         // An error was found
-                        Error thisError = new Error(word.getCount(),word.getWord(),2,null);
+                        Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
                         errors.add(thisError);
                     }
                 }
@@ -110,6 +114,69 @@ public class RuleRunner {
                 for (Phrase subphrase : phrase.getPhrases()){
                     // Recursively call this rule to all possible sub-phrases
                     NPNumberDisagreement(subphrase);
+                }
+            }
+        }
+    }
+
+    private void PPCaseDisagreement(Phrase phrase){
+        int ruleNumber = 5;
+        if (phrase.getType() == PhraseType.PP){
+
+            AdverbCategory govern = AdverbCategory.DOES_NOT; // default
+
+            ArrayList<InterfaceWord> words = phrase.getWords();
+
+            for (Phrase possible : phrase.getPhrases()){
+                if (possible.getType() == PhraseType.MWE_PP){
+                    words.addAll(possible.getWords());
+                }
+            }
+
+            for (InterfaceWord word : words){
+                if (word.getType() == WordClass.ADVERB){
+                    if (word.getAdverbCategory() != AdverbCategory.DOES_NOT && word.getAdverbCategory() != AdverbCategory.EXCLAMATION){
+
+                        // This preposition governs a certain case
+                        // We need to make sure that all nouns in nested noun phrases have the same case!
+
+                        govern = word.getAdverbCategory();
+                    }
+                }
+            }
+
+            if (govern != AdverbCategory.DOES_NOT){
+               for (Phrase subphrase : phrase.getPhrases()){
+                   if (subphrase.getType() == PhraseType.NPs || subphrase.getType() == PhraseType.NP){
+
+                       words = subphrase.getAllWords();
+
+                       for (InterfaceWord word : words){
+                           WordClass wc = word.getType();
+                           if (wc == WordClass.NOUN || wc == WordClass.ADJECTIVE
+                                   || wc == WordClass.PRONOUN || wc == WordClass.ARTICLE
+                                   || wc == WordClass.NUMERAL){
+
+                               Case ncase = word.getCase();
+
+                               if (ncase != Case.NO_CASE && ncase != Case.NOMINATIVE){
+                                    AdverbCategory ac = AdverbCategory.valueOf(ncase.toString());
+                                    if (govern != ac)  {
+                                        // An error was found
+                                        Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
+                                        errors.add(thisError);
+                                    }
+                               }
+                           }
+                       }
+                   }
+               }
+            }
+        } else {
+            if (phrase.getPhrases() != null){
+                for (Phrase subphrase : phrase.getPhrases()){
+                    // Recursively call this rule to all possible sub-phrases
+                    PPCaseDisagreement(subphrase);
                 }
             }
         }
