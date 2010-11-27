@@ -37,7 +37,7 @@ public class AdverbPreposition extends AbstractWord {
         return type;
     }
 
-    public AdverbCategory getCategory() {
+    public AdverbCategory getAdverbCategory() {
         return category;
     }
 

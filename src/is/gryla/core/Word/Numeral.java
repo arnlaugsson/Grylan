@@ -38,11 +38,11 @@ public class Numeral  extends AbstractWord {
         return type;
     }
 
-    public NumeralCategory getCategory() {
+    public NumeralCategory getNumeralCategory() {
         return category;
     }
 
-    public GenderPerson getGender() {
+    public GenderPerson getGenderPerson() {
         return genderPerson;
     }
 

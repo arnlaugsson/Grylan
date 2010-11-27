@@ -50,7 +50,7 @@ public class Noun  extends AbstractWord {
         return type;
     }
 
-    public GenderPerson getGender() {
+    public GenderPerson getGenderPerson() {
         return genderPerson;
     }
 
@@ -62,7 +62,7 @@ public class Noun  extends AbstractWord {
         return ncase;
     }
 
-    public SuffixedArticle getArticle() {
+    public SuffixedArticle getSuffixedArticle() {
         return article;
     }
 

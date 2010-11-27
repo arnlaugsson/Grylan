@@ -46,7 +46,7 @@ public class Adjective extends AbstractWord {
         return type;
     }
 
-    public GenderPerson getGender() {
+    public GenderPerson getGenderPerson() {
         return genderPerson;
     }
 

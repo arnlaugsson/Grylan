@@ -26,7 +26,7 @@ public class RuleRunner {
         NPNumberDisagreement(this.root);
         NPGenderDisagreement(this.root);
         PPCaseDisagreement(this.root);
-
+        SubjCompGenderNumberDisagreement(this.root);
     }
 
     private void NPCaseDisagreement(Phrase phrase){
@@ -114,6 +114,45 @@ public class RuleRunner {
                 for (Phrase subphrase : phrase.getPhrases()){
                     // Recursively call this rule to all possible sub-phrases
                     NPNumberDisagreement(subphrase);
+                }
+            }
+        }
+    }
+
+    private void SubjCompGenderNumberDisagreement(Phrase phrase){
+        // TODO: Improve function! 
+        // Can only handle 1 sentence segments and only when the SUBJ is before the COMP ("Hún er góð" not "Góð er hún").
+        int ruleNumber = 4;
+
+        Number n = Number.NONE;
+        GenderPerson gp = GenderPerson.NONE;
+
+        for (Phrase subphrase : phrase.getPhrases()){
+
+            if (subphrase.getType() == PhraseType.SUBJ){
+
+                ArrayList<InterfaceWord> words = subphrase.getAllWords();
+                for (InterfaceWord word : words){
+                    if (word.getType() == WordClass.NOUN || word.getType() == WordClass.ADJECTIVE
+                            || word.getType() == WordClass.PRONOUN || word.getType() == WordClass.ARTICLE){
+
+                        gp = word.getGenderPerson();
+                        n = word.getNumber();
+                    }
+                }
+
+            } else if (subphrase.getType() == PhraseType.COMP){
+                if (n != Number.NONE){
+                    ArrayList<InterfaceWord> compWords = subphrase.getAllWords();
+                    for (InterfaceWord word : compWords){
+                        if (word.getType() == WordClass.ADJECTIVE){
+                            if (gp != word.getGenderPerson() || n != word.getNumber()){
+                                // Error
+                                Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
+                                errors.add(thisError);
+                            }
+                        }
+                    }
                 }
             }
         }

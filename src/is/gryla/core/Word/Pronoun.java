@@ -42,7 +42,7 @@ public class Pronoun  extends AbstractWord {
         return subcategory;
     }
 
-    public GenderPerson getGender() {
+    public GenderPerson getGenderPerson() {
         return genderPerson;
     }
 

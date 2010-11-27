@@ -6,6 +6,8 @@ import is.gryla.core.Word.TagAttributes.WordClass;
 import java.util.ArrayList;
 
 public class Phrase {
+
+    // TODO: combine start() and resolve() - they are now almost the same function (if not completely)
     private ArrayList<Phrase> phrases;
     private ArrayList<InterfaceWord> words;
     private PhraseType type;

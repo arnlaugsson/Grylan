@@ -37,7 +37,7 @@ public class Conjunction  extends AbstractWord {
         return type;
     }
 
-    public ConjunctionCategory getCategory() {
+    public ConjunctionCategory getConjunctionCategory() {
         return category;
     }
 }
