@@ -14,7 +14,7 @@ public class RuleRunner {
     private Phrase root;
 
     public RuleRunner() {
-        this.errors = null; // No errors before parsing silly!!! :D :) :O) TODO: taka þetta í burtu !! :)
+        this.errors = new ArrayList<Error>();
         this.root = null;
     }
 
@@ -37,16 +37,17 @@ public class RuleRunner {
                         base = word.getCase();
                     }
                     if (base != word.getCase()){
-                        // Villa!!!
-                        
+                        // An error was found
+                        Error thisError = new Error(word.getCount(),word.getWord(),1,null);
+                        errors.add(thisError);
                     }
                 }
             }
 
         } else {
-            // Köllum recursively á öll föll
             if (phrase.getPhrases() != null){
                 for (Phrase subphrase : phrase.getPhrases()){
+                    // Recursively call this rule to all possible sub-phrases
                     NPCaseDisagreement(subphrase);
                 }
             }

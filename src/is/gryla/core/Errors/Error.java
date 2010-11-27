@@ -15,6 +15,10 @@ public class Error {
         this.listCorrection = listCorrection;
     }
 
+    public String toString(){
+        return Integer.toString(this.pos) + " " + ident + " " + Integer.toString(this.rule) + " [" + "]"; // TODO: vantar corrections!
+    }
+
     public int getPos() {
         return pos;
     }
