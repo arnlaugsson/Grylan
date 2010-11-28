@@ -113,7 +113,7 @@ public class RuleRunner {
             if (phrase.getPhrases() != null){
                 for (Phrase subphrase : phrase.getPhrases()){
                     // Recursively call this rule to all possible sub-phrases
-                    NPNumberDisagreement(subphrase);
+                    NPGenderDisagreement(subphrase);
                 }
             }
         }

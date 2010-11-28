@@ -9,6 +9,7 @@ package is.gryla.core;
 
 import is.gryla.core.Errors.*;
 import is.gryla.core.Phrase.Phrase;
+import is.gryla.core.Phrase.PhraseType;
 import is.gryla.core.Rules.RuleRunner;
 import is.gryla.core.Word.InterfaceWord;
 import is.iclt.icenlp.core.tokenizer.Sentences;
@@ -23,10 +24,12 @@ class Gryla {
 
         //TODO: Ætli það sé betra að nota StringBuffer???
         String inputText = "";
+
         //Input should be a text inside parentheses ""
         if (args.length == 1){
             inputText = args[0];
         }
+
         //inputText = "Test lína til að parsa og tagga ef það sé ekkert inntak.";
         String outTaggedAndParsedText = "";
 
@@ -46,13 +49,10 @@ class Gryla {
             //System.err.println("Error: " + e);
         }
 
-        Phrase thisPhrase = Phrase.start(outTaggedAndParsedText);
-
+        Phrase thisPhrase = Phrase.resolve(outTaggedAndParsedText, PhraseType.ROOT);
         RuleRunner roadRunner = new RuleRunner();
-
         roadRunner.run(thisPhrase);
 
-        ArrayList<InterfaceWord> tempWords = thisPhrase.getAllWords();
         
         if (roadRunner.errors != null && roadRunner.errors.size() > 0){
             for (is.gryla.core.Errors.Error error : roadRunner.errors){
@@ -62,24 +62,6 @@ class Gryla {
             System.out.println("ok");
         }
 
-        // Write the output to the screen.
-        // System.out.println(outTaggedAndParsedText);
-
-        // 0 Halló
-        // 1 Kristján
-        // 2 ,
-        // 3 ég
-        // 4 heiti
-        // 5 Sigurður
-        // 6 Karls
-        // 7 Magnússon
-        // 8 .
-        // 9 Gaman
-        // 10 er
-        // 11 að
-        // 12 kynnast
-        // 13 þig
-        // 14 .
         return;
     }
 

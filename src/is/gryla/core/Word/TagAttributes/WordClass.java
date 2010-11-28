@@ -14,7 +14,8 @@ public enum WordClass {
     ADVERB,
     CONJUNCTION,
     FOREIGN,
-    UNANALYZED;
+    UNANALYZED,
+    MISCELLENOUS;
 
     public static WordClass resolve(char c) {
         switch (c) {

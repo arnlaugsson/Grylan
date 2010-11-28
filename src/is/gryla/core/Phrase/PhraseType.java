@@ -21,7 +21,7 @@ public enum PhraseType{
     APs,    // Adjective phrases
     NPs,    // Noun phrases
     MWE,    // Multi-word expressions
-    MWE_PP,
+    MWE_PP, // TODO: find all these kind of MWE_xx !!
 
     // Start with '{*' and end with '*}'
     QUAL,   // See IceParser paper

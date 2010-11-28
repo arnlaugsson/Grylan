@@ -1,17 +1,14 @@
 package is.gryla.core.Phrase;
 
 import is.gryla.core.Word.*;
-import is.gryla.core.Word.TagAttributes.WordClass;
 
 import java.util.ArrayList;
 
 public class Phrase {
-
-    // TODO: combine start() and resolve() - they are now almost the same function (if not completely)
     private ArrayList<Phrase> phrases;
     private ArrayList<InterfaceWord> words;
     private PhraseType type;
-    private boolean questionMark;
+    private boolean questionMark; // Not currently used - see NPq grammar rule todo.
     private static int count = 0;
 
     private Phrase(ArrayList<Phrase> phrases, ArrayList<InterfaceWord> words, PhraseType type, boolean questionMark) {
@@ -20,520 +17,211 @@ public class Phrase {
         this.type = type;
     }
 
-    private static Phrase resolve(String in, PhraseType type) {
+    public static Phrase resolve(String in, PhraseType type) {
         ArrayList<Phrase> phrases = new ArrayList<Phrase>();
         ArrayList<InterfaceWord> words = new ArrayList<InterfaceWord>();
+        PhraseType token;
         boolean questionMark = false;
 
         if (type == PhraseType.NPq) {
-            // IceNLP marked NP as suspicious
+            // TODO: add a new grammar rule for these kinds of NP's
             questionMark = true;
         }
 
-        // Við þurfum þetta ekki - notum type !!!
-        PhraseType token = PhraseType.ROOT;
+        // New Implementation
+
+        in = in.replace("\n"," ");
 
         while (in.length() > 0) {
             in = in.trim();
-            String[] tokens = in.split(" ", 2);
+            String[] parts = in.split(" ", 2);
 
-            if (tokens[0].charAt(0) == '[' && tokens[0].length() > 1) {
-                if (tokens[0] == "[NP?") {
-                    // A new feature of IceNLP marks dubious NP with a question mark
-                    token = PhraseType.NPq;
-                }else {
-                    token = PhraseType.valueOf(tokens[0].substring(1, tokens[0].length()));
-                }
-            } else if (tokens[0].charAt(0) == '{' && tokens[0].length() > 1) {
-                if (tokens[0].charAt(tokens[0].length() - 1) == '<' || tokens[0].charAt(tokens[0].length() - 1) == '>') {
-                    token = PhraseType.valueOf(tokens[0].substring(2, tokens[0].length() - 1));
+            if (parts[0].length() > 1) {
+                if (parts[0].charAt(0) == '[' || parts[0].charAt(0) == '{') {
+
+                    // Start of phrase
+                    // .. but what type of phrase?? Let's find out.
+
+                    String identifier = parts[0].substring(1); // Ignore [ or {
+                    int upTo = parts[1].indexOf(identifier);
+
+                    String name = identifier;
+                    // Remove annoying characters ;)
+                    name = name.replace("*","");
+                    name = name.replace(">","");
+                    name = name.replace("<","");
+
+                    if (name.startsWith("MWE")){
+                        // We are only interested in marking MWE, not what type of MWE it is!
+                        name = name.substring(0,2);
+                    }
+
+                    switch (PhraseType.valueOf(name)) {
+                        case AdvP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.AdvP));
+                            break;
+                        case AP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.AP));
+                            break;
+                        case NP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.NP));
+                            break;
+                        case NPq:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.NPq));
+                            break;
+                        case PP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.PP));
+                            break;
+                        case VPb:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.VPb));
+                            break;
+                        case VPi:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.VPi));
+                            break;
+                        case VPs:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.VPs));
+                            break;
+                        case VPg:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.VPg));
+                            break;
+                        case VP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.VP));
+                            break;
+                        case CP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.CP));
+                            break;
+                        case SCP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.SCP));
+                            break;
+                        case InjP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.InjP));
+                            break;
+                        case APs:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.APs));
+                            break;
+                        case NPs:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.NPs));
+                            break;
+                        case MWE:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.MWE));
+                            break;
+                        case QUAL:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.QUAL));
+                            break;
+                        case SUBJ:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.SUBJ));
+                            break;
+                        case OBJ:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.OBJ));
+                            break;
+                        case OBJAP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.OBJAP));
+                            break;
+                        case OBJNOM:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.OBJNOM));
+                            break;
+                        case IOBJ:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.IOBJ));
+                            break;
+                        case COMP:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.COMP));
+                            break;
+                        case TIMEX:
+                            phrases.add(resolve(parts[1].substring(0, upTo), PhraseType.TIMEX));
+                            break;
+                        default:
+                            throw new RuntimeException("No known phrase type starts with " + identifier + ".");
+                    }
+                    // Now our remaining text gets sent to the input variable to keep on parsing
+                    in = parts[1].substring(upTo+identifier.length()+1);
+
                 } else {
-                    token = PhraseType.valueOf(tokens[0].substring(2, tokens[0].length()));
+
+                    // Start of word
+
+                    String tag = parts[1];
+                    String word = parts[0];
+
+                    String[] rest = {"", ""};
+                    if (tag.contains(" ")) {
+                        rest = tag.split(" ", 2);
+                        tag = rest[0];
+                    }
+
+                    switch (tag.charAt(0)) {
+                        case 'n':
+                            words.add(Noun.resolve(word, tag, count));
+                            break;
+                        case 'l':
+                            words.add(Adjective.resolve(word, tag, count));
+                            break;
+                        case 'f':
+                            words.add(Pronoun.resolve(word, tag, count));
+                            break;
+                        case 'g':
+                            words.add(Article.resolve(word, tag, count));
+                            break;
+                        case 't':
+                            words.add(Numeral.resolve(word, tag, count));
+                            break;
+                        case 's':
+                            words.add(Verb.resolve(word, tag, count));
+                            break;
+                        case 'a':
+                            words.add(AdverbPreposition.resolve(word, tag, count));
+                            break;
+                        case 'c':
+                            words.add(Conjunction.resolve(word, tag, count));
+                            break;
+                        case 'e':
+                            words.add(Foreign.resolve(word, count));
+                            break;
+                        case 'x':
+                            words.add(Unanalyzed.resolve(word, count));
+                            break;
+                        default:
+                            words.add(Miscellaneous.resolve(word, count));
+                            break;
+                    }
+                    count++;
+                    in = rest[1];
                 }
-            } else if (tokens[0].matches("[a-záéðíóúýþæöA-ZÁÉÐÍÓÚÝÞÆÖ0-9]*")) { // [a-záéðíóúýþæöA-ZÁÉÐÍÓÚÝÞÆÖ0-9]*
-
-                // Word! Create an instance of a correct word class and add to wordList
-
-                String tag = tokens[1];
-                String word = tokens[0];
-
-                String[] rest = {"", ""};
-                if (tokens[1].contains(" ")) {
-                    rest = tokens[1].split(" ", 2);
-                    tag = rest[0];
-                }
-                
-                switch (tag.charAt(0)) {
-                    case 'n':
-                        words.add(Noun.resolve(word, tag, count)); // Here is the first error in TestSentence
-                        count++;
-                        break;
-                    case 'l':
-                        words.add(Adjective.resolve(word, tag, count));
-                        count++;
-                        break;
-                    case 'f':
-                        words.add(Pronoun.resolve(word, tag, count));
-                        count++;
-                        break;
-                    case 'g':
-                        words.add(Article.resolve(word, tag, count));
-                        count++;
-                        break;
-                    case 't':
-                        words.add(Numeral.resolve(word, tag, count));
-                        count++;
-                        break;
-                    case 's':
-                        words.add(Verb.resolve(word, tag, count));
-                        count++;
-                        break;
-                    case 'a':
-                        words.add(AdverbPreposition.resolve(word, tag, count));
-                        count++;
-                        break;
-                    case 'c':
-                        words.add(Conjunction.resolve(word, tag, count));
-                        count++;
-                        break;
-                    case 'e':
-                        words.add(Foreign.resolve(word, count));
-                        count++;
-                        break;
-                    case 'x':
-                        words.add(Unanalyzed.resolve(word, count));
-                        count++;
-                        break;
-                    default:
-                        break;
-                }
-
-                in = rest[1];
-                continue; // Next steps are only for Subphrases - not words, so we quit.
             } else {
-                // punktur, punktur, komma strik
+                String word = parts[0];
+
                 String[] rest = {"", ""};
-                if (tokens[1].contains(" ")) {
-                    rest = tokens[1].split(" ", 2);
+                if (parts[1].contains(" ")) {
+                    rest = parts[1].split(" ", 2);
                 }
+
+                words.add(Miscellaneous.resolve(word,count));
+                count++;
                 in = rest[1];
-                continue;
             }
-
-            Phrase phrase = null;
-            int position;
-
-
-            switch (token) {
-                case AdvP:
-                    position = tokens[1].indexOf("AdvP]");
-                    phrases.add(resolve(tokens[1].substring(0, position), token));
-                    in = tokens[1].substring(position + 5, tokens[1].length());
-                    break;
-                case AP:
-                    position = tokens[1].indexOf("AP]");
-                    //phrase = resolve(tokens[1], token);
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case NP:
-                    position = tokens[1].indexOf("NP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case NPq:
-                    position = tokens[1].indexOf("NP?]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case PP:
-                    position = tokens[1].indexOf(" PP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case VPb:
-                    position = tokens[1].indexOf("VPb]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VPi:
-                    position = tokens[1].indexOf("VPi]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VPs:
-                    position = tokens[1].indexOf("VPs]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VPg:
-                    position = tokens[1].indexOf("VPg]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VP:
-                    position = tokens[1].indexOf("VP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case CP:
-                    position = tokens[1].indexOf("CP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case SCP:
-                    position = tokens[1].indexOf("SCP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case InjP:
-                    position = tokens[1].indexOf("InjP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 5, tokens[1].length());
-                    break;
-                case APs:
-                    position = tokens[1].indexOf("APs]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case NPs:
-                    position = tokens[1].indexOf("NPs]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case MWE:
-                    position = tokens[1].indexOf("MWE]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case MWE_PP:
-                    position = tokens[1].indexOf("MWE_PP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 7, tokens[1].length());
-                    break;
-                case QUAL:
-                    position = tokens[1].indexOf("*QUAL");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case SUBJ:
-                    position = tokens[1].indexOf("*SUBJ");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case OBJ:
-                    position = tokens[1].indexOf("*OBJ");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 4) == '}') {
-                        in = tokens[1].substring(position + 5, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    }
-                    break;
-                case OBJAP:
-                    position = tokens[1].indexOf("*OBJAP");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 6) == '}') {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 8, tokens[1].length());
-                    }
-                    break;
-                case OBJNOM:
-                    position = tokens[1].indexOf("*OBJNOM");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 7) == '}') {
-                        in = tokens[1].substring(position + 8, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 9, tokens[1].length());
-                    }
-                    break;
-                case IOBJ:
-                    position = tokens[1].indexOf("*IOBJ");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case COMP:
-                    position = tokens[1].indexOf("*COMP");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case TIMEX:
-                    position = tokens[1].indexOf("*TIMEX");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 6) == '}') {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 8, tokens[1].length());
-                    }
-                    break;
-                default:
-                    break;
-            }
-            if (phrase != null) {
-                phrases.add(phrase);
-            }
-
         }
         return new Phrase(phrases, words, type, questionMark);
     }
 
-    public static Phrase start(String in) {
-        /* Called for the first time */
-
-        ArrayList<Phrase> phrases = new ArrayList<Phrase>();
-        ArrayList<InterfaceWord> words = new ArrayList<InterfaceWord>();
-        PhraseType token = PhraseType.ROOT;
-
-        while (in.length() > 0) {
-            in = in.trim();
-            String[] tokens = in.split(" ", 2);
-
-            if (tokens[0].charAt(0) == '[' && tokens[0].length() > 1) {
-                if (tokens[0] == "[NP?") {
-                    // A new feature of IceNLP marks dubious NP with a question mark
-                    token = PhraseType.NPq;
-                } else {
-                    token = PhraseType.valueOf(tokens[0].substring(1, tokens[0].length()));
-                }
-            } else if (tokens[0].charAt(0) == '{' && tokens[0].length() > 1) {
-                if (tokens[0].charAt(tokens[0].length() - 1) == '<' || tokens[0].charAt(tokens[0].length() - 1) == '>') {
-                    token = PhraseType.valueOf(tokens[0].substring(2, tokens[0].length() - 1));
-                } else {
-                    token = PhraseType.valueOf(tokens[0].substring(2, tokens[0].length()));
-                }
-            } else {
-                // punktur, punktur, komma strik
-                String[] rest = {"", ""};
-                words.add(Miscellaneous.resolve(tokens[0], count));
-                count++;
-
-                if (tokens.length > 1){
-                    if (tokens[1].contains(" ")) {
-                        rest = tokens[1].split(" ", 2);
-                    }
-                }
-
-                in = rest[1];
-                continue;
-            }
-
-
-            Phrase phrase = null;
-            int position = 0;
-
-
-            switch (token) {
-                // TODO: Make a function that does this for all cases and call function everywhere :)
-                case AdvP:
-                    position = tokens[1].indexOf("AdvP]");
-                    phrases.add(resolve(tokens[1].substring(0, position), token));
-                    in = tokens[1].substring(position + 5, tokens[1].length() - 1);
-                    break;
-                case AP:
-                    position = tokens[1].indexOf("AP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case NP:
-                    position = tokens[1].indexOf("NP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case NPq:
-                    position = tokens[1].indexOf("NP?]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case PP:
-                    position = tokens[1].indexOf(" PP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case VPb:
-                    position = tokens[1].indexOf("VPb]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VPi:
-                    position = tokens[1].indexOf("VPi]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VPs:
-                    position = tokens[1].indexOf("VPs]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VPg:
-                    position = tokens[1].indexOf("VPg]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case VP:
-                    position = tokens[1].indexOf("VP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case CP:
-                    position = tokens[1].indexOf("CP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 3, tokens[1].length());
-                    break;
-                case SCP:
-                    position = tokens[1].indexOf("SCP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case InjP:
-                    position = tokens[1].indexOf("InjP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 5, tokens[1].length());
-                    break;
-                case APs:
-                    position = tokens[1].indexOf("APs]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case NPs:
-                    position = tokens[1].indexOf("NPs]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case MWE:
-                    position = tokens[1].indexOf("MWE]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 4, tokens[1].length());
-                    break;
-                case MWE_PP:
-                    position = tokens[1].indexOf("MWE_PP]");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    in = tokens[1].substring(position + 7, tokens[1].length());
-                    break;
-                case QUAL:
-                    position = tokens[1].indexOf("*QUAL");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case SUBJ:
-                    position = tokens[1].indexOf("*SUBJ");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case OBJ:
-                    position = tokens[1].indexOf("*OBJ");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 4) == '}') {
-                        in = tokens[1].substring(position + 5, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    }
-                    break;
-                case OBJAP:
-                    position = tokens[1].indexOf("*OBJAP");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 6) == '}') {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 8, tokens[1].length());
-                    }
-                    break;
-                case OBJNOM:
-                    position = tokens[1].indexOf("*OBJNOM");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 7) == '}') {
-                        in = tokens[1].substring(position + 8, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 9, tokens[1].length());
-                    }
-                    break;
-                case IOBJ:
-                    position = tokens[1].indexOf("*IOBJ");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case COMP:
-                    position = tokens[1].indexOf("*COMP");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 5) == '}') {
-                        in = tokens[1].substring(position + 6, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    }
-                    break;
-                case TIMEX:
-                    position = tokens[1].indexOf("*TIMEX");
-                    phrase = resolve(tokens[1].substring(0, position), token);
-                    if (tokens[1].charAt(position + 6) == '}') {
-                        in = tokens[1].substring(position + 7, tokens[1].length());
-                    } else {
-                        in = tokens[1].substring(position + 8, tokens[1].length());
-                    }
-                    break;
-                default:
-                    // Eitthvað tákn (punktur, komma, eða þannig) - hækka word counter!
-                    count++;
-                    break;
-            }
-            if (phrase != null) {
-                phrases.add(phrase);
-            }
-        }
-        return new Phrase(phrases, words, PhraseType.ROOT, false);
-    }
 
     /**
-     *  Returns a list of all words belonging to the phrase and it's possible subphrases (recursive).
-     *  Note: words are not necessarily in the correct order..
+     * Returns a list of all words belonging to the phrase and it's possible subphrases (recursive).
+     * Note: words are not necessarily in the correct order..
      *
      * @return ArrayList of all words found beneath phrase
      */
-    public ArrayList<InterfaceWord> getAllWords(){
+    public ArrayList<InterfaceWord> getAllWords() {
         ArrayList<InterfaceWord> words = new ArrayList<InterfaceWord>();
 
-        if (this.words != null){
+        if (this.words != null) {
             words.addAll(this.words);
         }
 
-        if (this.phrases != null){
-            for (Phrase phrase : this.phrases){
+        if (this.phrases != null) {
+            for (Phrase phrase : this.phrases) {
                 words.addAll(phrase.getAllWords());
             }
         }
         return words;
-    }
-    
-
-    public void runRules(){
-        
     }
 
     public PhraseType getType() {
