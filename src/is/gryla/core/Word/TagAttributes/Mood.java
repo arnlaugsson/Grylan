@@ -10,7 +10,7 @@ public enum Mood {
     PERSENT,    // Present participle
     PAST;       // Past particle
 
-    public static Mood resolve(char c) {
+    public static Mood parse(char c) {
         switch (c) {
             case 'n':
                 return INFINITIVE;

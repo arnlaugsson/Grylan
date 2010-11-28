@@ -12,7 +12,7 @@ public class Miscellaneous extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Miscellaneous resolve(String word, int count){
+    public static Miscellaneous parse(String word, int count){
         return new Miscellaneous(word,count);
     }
 

@@ -5,7 +5,7 @@ public enum Declension {
     STRONG,
     WEAK;
 
-    public static Declension resolve(char c) {
+    public static Declension parse(char c) {
         switch (c) {
             case 'v':
                 return STRONG;

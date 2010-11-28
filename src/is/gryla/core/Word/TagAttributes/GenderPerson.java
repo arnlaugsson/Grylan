@@ -12,7 +12,7 @@ public enum GenderPerson {
     UNSPECIFIED,
     NONE;
 
-    public static GenderPerson resolve(char c) {
+    public static GenderPerson parse(char c) {
         switch (c) {
             case 'k':
                 return MALE;

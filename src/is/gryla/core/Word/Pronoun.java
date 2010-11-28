@@ -21,11 +21,11 @@ public class Pronoun  extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Pronoun resolve(String word, String tag,int count) {
-        Subcategory subcategory = Subcategory.resolve(tag.charAt(1));
-        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(2));
-        Number number = Number.resolve(tag.charAt(3));
-        Case ncase = Case.resolve(tag.charAt(4));
+    public static Pronoun parse(String word, String tag,int count) {
+        Subcategory subcategory = Subcategory.parse(tag.charAt(1));
+        GenderPerson genderPerson = GenderPerson.parse(tag.charAt(2));
+        Number number = Number.parse(tag.charAt(3));
+        Case ncase = Case.parse(tag.charAt(4));
 
         return new Pronoun(word, subcategory, genderPerson, number, ncase,count);
     }

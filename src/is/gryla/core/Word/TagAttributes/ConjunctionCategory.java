@@ -6,7 +6,7 @@ public enum ConjunctionCategory {
     RELATIVIZER,
     NONE;
 
-    public static ConjunctionCategory resolve(char c) {
+    public static ConjunctionCategory parse(char c) {
         switch (c) {
             case 'n':
                 return INFINITIVE;

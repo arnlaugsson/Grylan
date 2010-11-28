@@ -1,11 +1,5 @@
 package is.gryla.core.Word.Test;
 
-import is.gryla.core.Word.Adjective;
-import is.gryla.core.Word.TagAttributes.GenderPerson;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class TestAdjective {
     public static void main(String[] args) {
 //        String testString1 = "ljótur lkensf";
@@ -16,9 +10,9 @@ public class TestAdjective {
 //        String[] secon = testString2.split(" ",2);
 //        String[] third = testString3.split(" ",2);
 //
-//        Adjective thisAdjective = Adjective.resolve(first[0],first[1]);
-//        Adjective thatAdjective = Adjective.resolve(secon[0],secon[1]);
-//        Adjective whatAdjective = Adjective.resolve(third[0],third[1]);
+//        Adjective thisAdjective = Adjective.parse(first[0],first[1]);
+//        Adjective thatAdjective = Adjective.parse(secon[0],secon[1]);
+//        Adjective whatAdjective = Adjective.parse(third[0],third[1]);
 //
 //        System.out.println(thisAdjective.getWord() + "\t\t" +
 //                thisAdjective.getType() + "\t" +

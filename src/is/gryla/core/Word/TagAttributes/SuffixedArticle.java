@@ -5,7 +5,7 @@ public enum SuffixedArticle {
     SUFFIXED,       // Viðbættur greinir
     NO_ARTICLE;     // Ekki viðbættur greinir
 
-    public static SuffixedArticle resolve(char c) {
+    public static SuffixedArticle parse(char c) {
         switch (c) {
             case 'g':
                 return SUFFIXED;

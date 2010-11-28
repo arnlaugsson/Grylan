@@ -18,12 +18,12 @@ public class AdverbPreposition extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static AdverbPreposition resolve(String word, String tag, int count){
-        AdverbCategory category = AdverbCategory.resolve(tag.charAt(1));
+    public static AdverbPreposition parse(String word, String tag, int count){
+        AdverbCategory category = AdverbCategory.parse(tag.charAt(1));
         Degree degree = Degree.NONE;
 
         if (tag.length() > 2){
-            degree = Degree.resolve(tag.charAt(2));
+            degree = Degree.parse(tag.charAt(2));
         }
 
         return new AdverbPreposition(word,category,degree,count);

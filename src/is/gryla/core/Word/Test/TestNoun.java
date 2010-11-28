@@ -1,7 +1,5 @@
 package is.gryla.core.Word.Test;
 
-import is.gryla.core.Word.Noun;
-
 public class TestNoun {
     public static void main(String[] args) {
 //        String testString1 = "borðið nheng";
@@ -12,9 +10,9 @@ public class TestNoun {
 //        String[] secon = testString2.split(" ",2);
 //        String[] third = testString3.split(" ",2);
 //
-//        Noun thisNoun = Noun.resolve(first[0],first[1]);
-//        Noun thatNoun = Noun.resolve(secon[0],secon[1]);
-//        Noun whatNoun = Noun.resolve(third[0],third[1]);
+//        Noun thisNoun = Noun.parse(first[0],first[1]);
+//        Noun thatNoun = Noun.parse(secon[0],secon[1]);
+//        Noun whatNoun = Noun.parse(third[0],third[1]);
 //
 //        System.out.println(thisNoun.getWord() + "\t\t" +
 //                thisNoun.getType() + "\t" +

@@ -49,7 +49,7 @@ class Gryla {
             //System.err.println("Error: " + e);
         }
 
-        Phrase thisPhrase = Phrase.resolve(outTaggedAndParsedText, PhraseType.ROOT);
+        Phrase thisPhrase = Phrase.parse(outTaggedAndParsedText, PhraseType.ROOT);
         RuleRunner roadRunner = new RuleRunner();
         roadRunner.run(thisPhrase);
 

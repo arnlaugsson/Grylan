@@ -6,7 +6,7 @@ public enum Number {
     PLURAL,     // fleirtala, f
     NONE;
 
-    public static Number resolve(char c) {
+    public static Number parse(char c) {
         switch (c) {
             case 'e':
                 return SINGULAR;

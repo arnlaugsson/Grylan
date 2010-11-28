@@ -7,7 +7,7 @@ public enum Degree {
     SUPERLATIVE,    // Efsta stig
     NONE;
 
-    public static Degree resolve(char c) {
+    public static Degree parse(char c) {
         switch (c) {
             case 'f':
                 return POSITIVE;

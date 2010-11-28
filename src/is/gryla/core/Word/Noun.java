@@ -23,10 +23,10 @@ public class Noun  extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Noun resolve(String word,String tag,int count) {
-        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(1));
-        Number number = Number.resolve(tag.charAt(2));
-        Case ncase = Case.resolve(tag.charAt(3));
+    public static Noun parse(String word,String tag,int count) {
+        GenderPerson genderPerson = GenderPerson.parse(tag.charAt(1));
+        Number number = Number.parse(tag.charAt(2));
+        Case ncase = Case.parse(tag.charAt(3));
 
         SuffixedArticle article = SuffixedArticle.NO_ARTICLE; // Default no
         Proper proper = Proper.NOT_PROPER;    // Default no
@@ -35,8 +35,8 @@ public class Noun  extends AbstractWord {
             // 5th letter in a noun always represent an suffixed article
             article = SuffixedArticle.SUFFIXED;
         } else if (tag.length() == 6){
-            article = SuffixedArticle.resolve(tag.charAt(4));
-            proper = Proper.resolve(tag.charAt(5));
+            article = SuffixedArticle.parse(tag.charAt(4));
+            proper = Proper.parse(tag.charAt(5));
         }
 
         return new Noun(word, genderPerson, number, ncase, article, proper, count);

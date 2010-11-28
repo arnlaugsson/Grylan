@@ -21,11 +21,11 @@ public class Numeral  extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Numeral resolve(String word, String tag, int count){
-        NumeralCategory category = NumeralCategory.resolve(tag.charAt(1));
-        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(2));
-        Number number = Number.resolve(tag.charAt(3));
-        Case ncase = Case.resolve(tag.charAt(4));
+    public static Numeral parse(String word, String tag, int count){
+        NumeralCategory category = NumeralCategory.parse(tag.charAt(1));
+        GenderPerson genderPerson = GenderPerson.parse(tag.charAt(2));
+        Number number = Number.parse(tag.charAt(3));
+        Case ncase = Case.parse(tag.charAt(4));
 
         return new Numeral(word,category, genderPerson,number,ncase,count);
     }

@@ -8,7 +8,7 @@ public enum AdverbCategory {
     DATIVE,         // Governs dative
     GENITIVE;       // Governs genitive
 
-    public static AdverbCategory resolve(char c) {
+    public static AdverbCategory parse(char c) {
         switch (c) {
             case 'a':
                 return DOES_NOT;

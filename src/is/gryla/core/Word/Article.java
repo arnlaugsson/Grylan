@@ -22,10 +22,10 @@ public class Article extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Article resolve(String word, String tag, int count) {
-        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(1));
-        Number number = Number.resolve(tag.charAt(2));
-        Case ncase = Case.resolve(tag.charAt(3));
+    public static Article parse(String word, String tag, int count) {
+        GenderPerson genderPerson = GenderPerson.parse(tag.charAt(1));
+        Number number = Number.parse(tag.charAt(2));
+        Case ncase = Case.parse(tag.charAt(3));
 
         return new Article(word, genderPerson, number, ncase, count);
     }

@@ -33,7 +33,7 @@ public enum PhraseType{
     COMP,
     TIMEX;
 
-    public static PhraseType resolve(String s){
+    public static PhraseType parse(String s){
         try {
             return PhraseType.valueOf(s);
         }

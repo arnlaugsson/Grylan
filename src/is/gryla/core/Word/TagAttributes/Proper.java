@@ -7,7 +7,7 @@ public enum Proper {
     OTHER,      // Annað
     NOT_PROPER; // Ekki Proper
 
-    public static Proper resolve(char c) {
+    public static Proper parse(char c) {
         switch (c) {
             case 'm':
                 return PERSON;

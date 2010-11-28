@@ -10,7 +10,7 @@ public enum Subcategory {
     INTERROGATIVE,
     RELATIVE;
 
-    public static Subcategory resolve(char c) {
+    public static Subcategory parse(char c) {
         switch (c) {
             case 'a':
                 return DEMONSTRATIVE;

@@ -5,7 +5,7 @@ public enum Voice {
     ACTIVE,
     MIDDLE;
 
-    public static Voice resolve(char c) {
+    public static Voice parse(char c) {
         switch (c) {
             case 'g':
                 return ACTIVE;

@@ -23,16 +23,16 @@ public class Adjective extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Adjective resolve(String word, String tag, int count) {
-        GenderPerson genderPerson = GenderPerson.resolve(tag.charAt(1));
-        Number number = Number.resolve(tag.charAt(2));
-        Case ncase = Case.resolve(tag.charAt(3));
-        Declension declension = Declension.resolve(tag.charAt(4));
+    public static Adjective parse(String word, String tag, int count) {
+        GenderPerson genderPerson = GenderPerson.parse(tag.charAt(1));
+        Number number = Number.parse(tag.charAt(2));
+        Case ncase = Case.parse(tag.charAt(3));
+        Declension declension = Declension.parse(tag.charAt(4));
 
         Degree degree = Degree.NONE;
 
         if (tag.length() == 6){
-            degree = Degree.resolve(tag.charAt(5));
+            degree = Degree.parse(tag.charAt(5));
         }
 
         return new Adjective(word, genderPerson, number, ncase, declension, degree, count);

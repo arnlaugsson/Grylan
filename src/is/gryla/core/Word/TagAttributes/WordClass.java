@@ -3,7 +3,7 @@ package is.gryla.core.Word.TagAttributes;
 public enum WordClass {
     /*
     WordClass helps determine what kind of a wordclass the parser should generate.
-    With the helper function resolve() you can find out what type of a class you should create.
+    With the helper function parse() you can find out what type of a class you should create.
      */
     NOUN,
     ADJECTIVE,
@@ -17,7 +17,7 @@ public enum WordClass {
     UNANALYZED,
     MISCELLENOUS;
 
-    public static WordClass resolve(char c) {
+    public static WordClass parse(char c) {
         switch (c) {
             case 'n':
                 return NOUN;

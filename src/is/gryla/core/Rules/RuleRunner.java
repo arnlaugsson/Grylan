@@ -167,7 +167,7 @@ public class RuleRunner {
             ArrayList<InterfaceWord> words = phrase.getWords();
 
             for (Phrase possible : phrase.getPhrases()){
-                if (possible.getType() == PhraseType.MWE_PP){
+                if (possible.getType() == PhraseType.MWE){
                     words.addAll(possible.getWords());
                 }
             }

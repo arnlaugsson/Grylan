@@ -12,7 +12,7 @@ public class Foreign extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Foreign resolve(String word, int count){
+    public static Foreign parse(String word, int count){
         return new Foreign(word,count);
     }
 

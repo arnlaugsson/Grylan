@@ -8,7 +8,7 @@ public enum Case {
     GENATIVE,   //  e - eignafall
     NO_CASE;    // For verbs except in past participle
 
-    public static Case resolve(char c) {
+    public static Case parse(char c) {
         switch (c) {
             case 'n':
                 return NOMINATIVE;

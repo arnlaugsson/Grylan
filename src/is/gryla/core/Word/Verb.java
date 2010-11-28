@@ -25,9 +25,9 @@ public class Verb  extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Verb resolve(String word, String tag,int count){
-        Mood mood = Mood.resolve(tag.charAt(1));
-        Voice voice = Voice.resolve(tag.charAt(2));
+    public static Verb parse(String word, String tag,int count){
+        Mood mood = Mood.parse(tag.charAt(1));
+        Voice voice = Voice.parse(tag.charAt(2));
 
         GenderPerson genderPerson = GenderPerson.NONE;
         Tense tense = Tense.NO_TENSE;   // Default, then we set either tense or case
@@ -35,18 +35,18 @@ public class Verb  extends AbstractWord {
         Number number = Number.NONE;
 
         if (tag.length() > 3){
-            genderPerson = GenderPerson.resolve(tag.charAt(3));
-            number = Number.resolve(tag.charAt(4));
+            genderPerson = GenderPerson.parse(tag.charAt(3));
+            number = Number.parse(tag.charAt(4));
 
             tense = Tense.NO_TENSE;   // Default, then we set either tense or case
             ncase = Case.NO_CASE;      // depending on the genderPerson (past participle or other kind of verb)
 
             if (genderPerson == GenderPerson.FIRST || genderPerson == GenderPerson.SECOND || genderPerson == GenderPerson.THIRD){
                 // Verb is not past participle
-                tense = Tense.resolve(tag.charAt(5));
+                tense = Tense.parse(tag.charAt(5));
             }
             else{
-                ncase = Case.resolve(tag.charAt(5));
+                ncase = Case.parse(tag.charAt(5));
             }   
         }
         

@@ -1,7 +1,5 @@
 package is.gryla.core.Word.Test;
 
-import is.gryla.core.Word.Pronoun;
-
 public class TestPronoun {
     public static void main(String[] args) {
 //        String testString1 = "hann fpken";
@@ -12,9 +10,9 @@ public class TestPronoun {
 //        String[] secon = testString2.split(" ",2);
 //        String[] third = testString3.split(" ",2);
 //
-//        Pronoun thisPronoun = Pronoun.resolve(first[0],first[1]);
-//        Pronoun thatPronoun = Pronoun.resolve(secon[0],secon[1]);
-//        Pronoun whatPronoun = Pronoun.resolve(third[0],third[1]);
+//        Pronoun thisPronoun = Pronoun.parse(first[0],first[1]);
+//        Pronoun thatPronoun = Pronoun.parse(secon[0],secon[1]);
+//        Pronoun whatPronoun = Pronoun.parse(third[0],third[1]);
 //
 //        System.out.println(thisPronoun.getWord() + "\t\t" +
 //                thisPronoun.getType() + "\t" +

@@ -6,7 +6,7 @@ public enum Tense {
     PAST,
     NO_TENSE;
 
-    public static Tense resolve(char c) {
+    public static Tense parse(char c) {
         switch (c) {
             case 'n':
                 return PRESENT;

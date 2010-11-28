@@ -15,7 +15,7 @@ public class TestSentence {
         String thisString = "{*SUBJ> [NP Sigurður nken-m Árnason nkee-m NP] *SUBJ>} [VP átti sfg3eþ VP] {*OBJ< [NP [APs [AP fallegan lkeosf AP] [CP og c CP] [AP góðan lkeosf AP] APs] hest nkeo NP] *OBJ<} [SCP sem ct SCP] [VPb þótti sfg3eþ VPb] {*SUBJ< [NP ekkert fohen [AP betra lhenvm AP] NP] *SUBJ<} [CP en c CP] [VPi að cn leika sng VPi] {*OBJ< [NP sér fpkeþ NP] *OBJ<} [PP í aþ [NP stöðuvatninu nheþg NP] PP] . .";
         // Sigurður Árnason átti fallegan og góðan hest sem þótti ekkert betra en að leika sér í stöðuvatninu.
 
-        Phrase thisPhrase = Phrase.resolve(thisString, PhraseType.ROOT);
+        Phrase thisPhrase = Phrase.parse(thisString, PhraseType.ROOT);
         ArrayList<InterfaceWord> words = thisPhrase.getAllWords();
         RuleRunner roadRunner = new RuleRunner();
 

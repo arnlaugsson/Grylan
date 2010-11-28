@@ -15,11 +15,11 @@ public class Conjunction  extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Conjunction resolve(String word, String tag, int count){
+    public static Conjunction parse(String word, String tag, int count){
         try{
             ConjunctionCategory category = ConjunctionCategory.NONE;
             if (tag.charAt(1) == 'n' || tag.charAt(1) == 't'){
-                category = ConjunctionCategory.resolve(tag.charAt(1));
+                category = ConjunctionCategory.parse(tag.charAt(1));
             }
             
             return new Conjunction(word, category,count);

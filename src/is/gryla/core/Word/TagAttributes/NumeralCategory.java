@@ -6,7 +6,7 @@ public enum NumeralCategory {
     NUMERIC,    // Numeric constant
     PERCENTAGE;
 
-    public static NumeralCategory resolve(char c) {
+    public static NumeralCategory parse(char c) {
         switch (c) {
             case 'f':
                 return CARDINAL;

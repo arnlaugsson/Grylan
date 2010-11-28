@@ -12,7 +12,7 @@ public class Unanalyzed  extends AbstractWord {
         this.countNumber = count;
     }
 
-    public static Unanalyzed resolve(String word,int count){
+    public static Unanalyzed parse(String word,int count){
         return new Unanalyzed(word,count);
     }
 
