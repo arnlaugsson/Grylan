@@ -9,6 +9,7 @@ import is.gryla.core.Word.TagAttributes.Number;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class RuleRunner {
     public ArrayList<Error> errors;
@@ -28,6 +29,7 @@ public class RuleRunner {
         NPGenderDisagreement(this.root);
         SubjCompGenderNumberDisagreement(this.root);
         PPCaseDisagreement(this.root);
+        SubjVerbNumberDisagreement(this.root);
     }
 
     private void NPCaseDisagreement(Phrase phrase){
@@ -231,5 +233,50 @@ public class RuleRunner {
                 }
             }
         }
+    }
+
+    public void SubjVerbNumberDisagreement(Phrase phrase){
+        int ruleNumber = 6;
+
+        ArrayList<Phrase> subphrases = phrase.getPhrases();
+        Iterator it = subphrases.iterator();
+        Number num = Number.NONE;
+
+        while(it.hasNext()){
+            Phrase current = (Phrase) it.next();
+            if (current.getType() == PhraseType.SUBJ){
+                ArrayList<InterfaceWord> words = current.getAllWords();
+
+                for (InterfaceWord word : words){
+                    if (word.getNumber() != null){
+                        num = word.getNumber();
+                        break;
+                    }
+                }
+            } else{
+                num = Number.NONE;
+            }
+
+            if (it.hasNext() && num != Number.NONE){
+                current = (Phrase) it.next();
+                if (current.getType().toString().startsWith("VP")){
+                    ArrayList<InterfaceWord> wordsToCheck = current.getAllWords();
+
+                    for (InterfaceWord word : wordsToCheck){
+                        if (word.getType() == WordClass.VERB){
+                            if (word.getNumber() != num){
+                                // ERROR!
+                                Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
+                                errors.add(thisError);
+                            }
+                        }
+                    }
+                } else {
+                    num = Number.NONE;
+                }
+            }
+
+        }
+
     }
 }
