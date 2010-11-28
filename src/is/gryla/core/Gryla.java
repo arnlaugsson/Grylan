@@ -30,7 +30,7 @@ class Gryla {
             inputText = args[0];
         }
 
-        //inputText = "Test lína til að parsa og tagga ef það sé ekkert inntak.";
+        // "Hún er góði kennarans. Hann er stór strákar. Hún er góð kennari. Hún er góður. Hún hljóp í gegnum skóginum."
         String outTaggedAndParsedText = "";
 
 

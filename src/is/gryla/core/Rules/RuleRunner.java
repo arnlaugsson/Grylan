@@ -22,11 +22,12 @@ public class RuleRunner {
     public void run(Phrase sentence){
         this.root = sentence;
 
+        // Run all rules on sentence
         NPCaseDisagreement(this.root);
         NPNumberDisagreement(this.root);
         NPGenderDisagreement(this.root);
-        PPCaseDisagreement(this.root);
         SubjCompGenderNumberDisagreement(this.root);
+        PPCaseDisagreement(this.root);
     }
 
     private void NPCaseDisagreement(Phrase phrase){
@@ -34,14 +35,18 @@ public class RuleRunner {
         if (phrase.getType() == PhraseType.NP){
             ArrayList<InterfaceWord> words = phrase.getAllWords();
 
-            Case base = null;
+            if (words.size() <= 1){
+                // A word always agrees with itself ;)
+                return;
+            }
 
+            Case base = null;
             for (InterfaceWord word : words){
                 if (word.getCase() != null && word.getType() != WordClass.VERB){
                     if (base == null){
                         base = word.getCase();
                     }
-                    if (base != word.getCase()){
+                    else if (base != word.getCase()){
                         // An error was found
                         Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
                         errors.add(thisError);
@@ -64,14 +69,18 @@ public class RuleRunner {
         if (phrase.getType() == PhraseType.NP){
             ArrayList<InterfaceWord> words = phrase.getAllWords();
 
-            Number base = null;
+            if (words.size() <= 1){
+                // A word always agrees with itself ;)
+                return;
+            }
 
+            Number base = null;
             for (InterfaceWord word : words){
                 if (word.getNumber() != null && word.getType() != WordClass.VERB){
                     if (base == null){
                         base = word.getNumber();
                     }
-                    if (base != word.getNumber()){
+                    else if (base != word.getNumber()){
                         // An error was found
                         Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
                         errors.add(thisError);
@@ -94,14 +103,18 @@ public class RuleRunner {
         if (phrase.getType() == PhraseType.NP){
             ArrayList<InterfaceWord> words = phrase.getAllWords();
 
-            GenderPerson base = null;
+            if (words.size() <= 1){
+                // A word always agrees with itself ;)
+                return;
+            }
 
+            GenderPerson base = null;
             for (InterfaceWord word : words){
                 if (word.getGenderPerson() != null && word.getType() != WordClass.VERB){
                     if (base == null){
                         base = word.getGenderPerson();
                     }
-                    if (base != word.getGenderPerson()){
+                    else if (base != word.getGenderPerson()){
                         // An error was found
                         Error thisError = new Error(word.getCount(),word.getWord(),ruleNumber,null);
                         errors.add(thisError);
@@ -140,7 +153,6 @@ public class RuleRunner {
                         n = word.getNumber();
                     }
                 }
-
             } else if (subphrase.getType() == PhraseType.COMP){
                 if (n != Number.NONE){
                     ArrayList<InterfaceWord> compWords = subphrase.getAllWords();
