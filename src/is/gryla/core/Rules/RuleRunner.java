@@ -173,7 +173,7 @@ public class RuleRunner {
     }
 
     private void PPCaseDisagreement(Phrase phrase){
-        int ruleNumber = 5;
+        int ruleNumber = 6;
         if (phrase.getType() == PhraseType.PP){
 
             AdverbCategory govern = AdverbCategory.DOES_NOT; // default
@@ -236,7 +236,7 @@ public class RuleRunner {
     }
 
     public void SubjVerbNumberDisagreement(Phrase phrase){
-        int ruleNumber = 6;
+        int ruleNumber = 7;
 
         ArrayList<Phrase> subphrases = phrase.getPhrases();
         Iterator it = subphrases.iterator();
@@ -278,5 +278,10 @@ public class RuleRunner {
 
         }
 
+    }
+
+    public String errorsToString(){
+        // TODO: to abide the BNF we need to return
+        return null;
     }
 }

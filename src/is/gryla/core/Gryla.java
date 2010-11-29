@@ -22,39 +22,32 @@ import java.util.ArrayList;
 class Gryla {
     public static void main(String[] args) {
 
-        //TODO: Ætli það sé betra að nota StringBuffer???
         String inputText = "";
 
-        //Input should be a text inside parentheses ""
         if (args.length == 1){
             inputText = args[0];
         }
 
-        // "Hún er góði kennarans. Hann er stór strákar. Hún er góð kennari. Hún er góður. Hún hljóp í gegnum skóginum."
         String outTaggedAndParsedText = "";
-
 
         try {
             IceTaggerFacade tagger = new IceTaggerFacade(IceTagger.HmmModelType.startend);
             IceParserFacade parser = new IceParserFacade();
 
-            //Here we tag the text and get it back in a Sentence form.
             Sentences sentences = tagger.tag(inputText);
 
-            //Next we send the Sentences as strings to the parser and get back a string.
             outTaggedAndParsedText = parser.parse(sentences.toString(), true, false);
             
         } catch (Exception e) {
             System.out.println("Tag and parsing error.");
-            //System.err.println("Error: " + e);
         }
 
         Phrase thisPhrase = Phrase.parse(outTaggedAndParsedText, PhraseType.ROOT);
         RuleRunner roadRunner = new RuleRunner();
         roadRunner.run(thisPhrase);
-
         
         if (roadRunner.errors != null && roadRunner.errors.size() > 0){
+            String outPut;
             for (is.gryla.core.Errors.Error error : roadRunner.errors){
                 System.out.println(error.toString());
             }
