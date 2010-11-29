@@ -1,3 +1,13 @@
+# Rule names
+
+1. Disagreement in case within a noun phrase
+2. Disagreement in number within a noun phrase
+3. Disagreement in gender within a noun phrase
+4. Disagreement in gender between the subject and the complement
+5. Disagreement in number between the subject and the complement
+6. Disagreement in case in a prepositional phrase
+7. Disagreement in number between subject and related word
+
 # Rules Málgrýlan can handle
 
 + **Rule 1**: Disagreement in case within a noun phrase
@@ -36,7 +46,7 @@
 		+ The MWE_PP "í gegnum" governs accusative case, while "skóginum" is in dative case
 	+ Correct: "Hún hljóp í gegnum skóginn." (Eng. is the same)
 
-+ **Rule 7**: Disagreement in number between subject and related word
++ **Rule 7**: Disagreement in number between subject and related verb
 	+ An example: "Hann borðuðu mikið." (Eng. "He ate a lot.")
 		+ Error: verb related to subject is of wrong number
 		+ "Hann" is a singular pronoun, while "borðuðu" is a plural form of the verb
