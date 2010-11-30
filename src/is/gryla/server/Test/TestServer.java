@@ -13,7 +13,8 @@ public class TestServer {
         System.out.println("Sending string:\n" + testString + "\n");
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-        out.println("0"+testString);
+        // out.println("0"+testString); // Shutdown message (0 in front)
+        out.println("1"+testString); 
 
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
