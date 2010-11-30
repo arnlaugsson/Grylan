@@ -17,6 +17,10 @@ public class Phrase {
         this.type = type;
     }
 
+    public Phrase(){
+        this.count = 0;
+    }
+
     public static Phrase parse(String in, PhraseType type) {
         ArrayList<Phrase> phrases = new ArrayList<Phrase>();
         ArrayList<InterfaceWord> words = new ArrayList<InterfaceWord>();
@@ -239,5 +243,9 @@ public class Phrase {
 
     public ArrayList<InterfaceWord> getWords() {
         return words;
+    }
+
+    public void resetCount(){
+        this.count = 0;
     }
 }
