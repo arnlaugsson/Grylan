@@ -7,55 +7,55 @@
 
 package is.gryla.core;
 
-import is.gryla.core.Errors.*;
 import is.gryla.core.Phrase.Phrase;
 import is.gryla.core.Phrase.PhraseType;
 import is.gryla.core.Rules.RuleRunner;
-import is.gryla.core.Word.InterfaceWord;
-import is.iclt.icenlp.core.tokenizer.Sentences;
 import is.iclt.icenlp.core.icetagger.IceTagger;
-import is.iclt.icenlp.facade.IceTaggerFacade;
+import is.iclt.icenlp.core.tokenizer.Sentences;
 import is.iclt.icenlp.facade.IceParserFacade;
+import is.iclt.icenlp.facade.IceTaggerFacade;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 class Gryla {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        System.out.println("Málgrýlan - A rule-based grammar checker for Icelandic");
 
-        String inputText = "";
-
-        if (args.length == 1){
-            inputText = args[0];
+        if (args.length < 1) {
+            System.out.println("-------------------------------------");
+            System.out.println("Usage: > java Gryla \"Text to check for errors.\"");
+            System.out.println("Notkun: > java Gryla \"Texti til þess að athuga.\"");
+            System.out.println("-------------------------------------");
+            System.out.println("Note: Can also be run a server - see TCPServer.java");
+            return;
         }
 
+        String inputText = args[0];
         String outTaggedAndParsedText = "";
 
-        try {
-            IceTaggerFacade tagger = new IceTaggerFacade(IceTagger.HmmModelType.startend);
-            IceParserFacade parser = new IceParserFacade();
 
-            Sentences sentences = tagger.tag(inputText);
+        System.out.println("-------------------------------------");
+        System.out.println("Sentence: \"" + inputText + "\"");
 
-            outTaggedAndParsedText = parser.parse(sentences.toString(), true, false);
-            
-        } catch (Exception e) {
-            System.out.println("Tag and parsing error.");
-        }
+        IceTaggerFacade tagger = new IceTaggerFacade(IceTagger.HmmModelType.startend);
+        IceParserFacade parser = new IceParserFacade();
+
+        Sentences sentences = tagger.tag(inputText);
+        outTaggedAndParsedText = parser.parse(sentences.toString(), true, false);
 
         Phrase thisPhrase = Phrase.parse(outTaggedAndParsedText, PhraseType.ROOT);
-        RuleRunner roadRunner = new RuleRunner();
-        roadRunner.run(thisPhrase);
-        
-        if (roadRunner.errors != null && roadRunner.errors.size() > 0){
-            String outPut;
-            for (is.gryla.core.Errors.Error error : roadRunner.errors){
-                System.out.println(error.toString());
-            }
-        } else{
-            System.out.println("ok");
-        }
+        RuleRunner ruleRunner = new RuleRunner();
+        ruleRunner.run(thisPhrase);
 
-        return;
+        if (ruleRunner.errors != null && ruleRunner.errors.size() > 0) {
+            System.out.println("Error(s) found:");
+            for (is.gryla.core.Errors.Error error : ruleRunner.errors) {
+                System.out.println("\t" + error.toString());
+            }
+        } else {
+            System.out.println("No errors found.");
+        }
+        System.out.println("-------------------------------------");
     }
 
 }

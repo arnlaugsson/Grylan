@@ -18,6 +18,8 @@ import java.net.Socket;
 public class TCPServer {
     /**
      * An server running Málgrýlan - listens on given port or default and finds grammatical errors in sent strings. 
+     * To parse a sentence send the server a request with "1" in front of the text to be parsed (the first character
+     * of the string must be 1, if you want to parse, if not the server will shutdown).
      *
      * @param args
      * @throws IOException
@@ -95,6 +97,7 @@ public class TCPServer {
             if (command != 49){
                 // Shutdown server!
                 System.out.println("Shutdown message received from " + socket.toString() + ".");
+                System.out.println("-------------------------------------");
                 System.out.println("Goodbye!");
                 break;
             }
