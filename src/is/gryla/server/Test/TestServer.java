@@ -13,8 +13,8 @@ public class TestServer {
         System.out.println("Sending string:\n" + testString + "\n");
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-        // out.println("0"+testString); // Shutdown message (0 in front)
-        out.println("1"+testString); 
+        //out.println("0"+testString); // Shutdown message (0 in front)
+        out.println("1"+testString);
 
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -27,6 +27,8 @@ public class TestServer {
 
         if (errors != "ok"){
             System.out.println("Reply:\n"+errors);
+        } else if (errors == ""){
+            System.out.println("No reply.");  
         } else {
             System.out.println("No errors found.");
         }
