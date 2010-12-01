@@ -96,7 +96,9 @@ public class TCPServer {
 
             if (command != 49){
                 // Shutdown server!
+                String temp = bReader.readLine();
                 System.out.println("Shutdown message received from " + socket.toString() + ".");
+                System.out.println(temp);
                 System.out.println("-------------------------------------");
                 System.out.println("Goodbye!");
                 break;

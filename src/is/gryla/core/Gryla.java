@@ -23,8 +23,8 @@ class Gryla {
 
         if (args.length < 1) {
             System.out.println("-------------------------------------");
-            System.out.println("Usage: > java Gryla \"Text to check for errors.\"");
-            System.out.println("Notkun: > java Gryla \"Texti til þess að athuga.\"");
+            System.out.println("Usage: java -Xmx256M -jar Gryla.jar \"Text to check for errors.\"");
+            System.out.println("Notkun: java -Xmx256M -jar Gryla.jar \"Texti til þess að athuga.\"");
             System.out.println("-------------------------------------");
             System.out.println("Note: Can also be run a server - see TCPServer.java");
             return;
