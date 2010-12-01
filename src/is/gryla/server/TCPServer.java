@@ -55,7 +55,7 @@ public class TCPServer {
                     ":" + socket.getPort());
 
             //Scanner scanner = new Scanner(socket.getInputStream());
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
             // print received data
 
             int command = (int) bReader.read();
