@@ -55,12 +55,20 @@ public class TCPServer {
                     ":" + socket.getPort());
 
             //Scanner scanner = new Scanner(socket.getInputStream());
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
+            BufferedReader bReader = null;
+            try {
+                bReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
+            }
+            catch (Exception e){
+
+            }
             // print received data
 
             int command = (int) bReader.read();
-            if (command == 49) { 
+            if (command == 49) {
+
                 String message = bReader.readLine();
+
 
                 if (message == null) continue;
                 System.out.println("-------------------------------------");
