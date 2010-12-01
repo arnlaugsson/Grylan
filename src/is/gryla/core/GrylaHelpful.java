@@ -17,12 +17,26 @@ import is.iclt.icenlp.facade.IceTaggerFacade;
 
 import java.io.IOException;
 
-class Gryla {
+class GrylaHelpful {
     public static void main(String[] args) throws IOException {
+        boolean help = false;
+
+        System.out.println("Málgrýlan - A rule-based grammar checker for Icelandic");
+
+        if (args.length < 1) {
+            System.out.println("-------------------------------------");
+            System.out.println("Usage: java -Xmx256M -jar Gryla.jar \"Text to check for errors.\"");
+            System.out.println("Notkun: java -Xmx256M -jar Gryla.jar \"Texti til þess að athuga.\"");
+            System.out.println("-------------------------------------");
+            System.out.println("Note: Can also be run as a server - see TCPServer.java");
+            return;
+        }
 
         String inputText = args[0];
         String outTaggedAndParsedText = "";
 
+        System.out.println("-------------------------------------");
+        System.out.println("Sentence: \"" + inputText + "\"");
 
         IceTaggerFacade tagger = new IceTaggerFacade(IceTagger.HmmModelType.startend);
         IceParserFacade parser = new IceParserFacade();
@@ -35,12 +49,14 @@ class Gryla {
         ruleRunner.run(thisPhrase);
 
         if (ruleRunner.errors != null && ruleRunner.errors.size() > 0) {
+            System.out.println("Error(s) found:");
             for (is.gryla.core.Errors.Error error : ruleRunner.errors) {
-                System.out.println(error.toString());
+                System.out.println("\t" + error.toString());
             }
         } else {
-            System.out.println("ok");
+            System.out.println("No errors found.");
         }
+        System.out.println("-------------------------------------");
     }
 
 }
